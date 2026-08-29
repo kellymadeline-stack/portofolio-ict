@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelly Madeline Utomo - Portofolio Digital Murid SMP</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        skyBrand: '#38bdf8',
+                        cloudBg: '#f0f9ff'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='22' x='2' font-size='20'>☀️</text></svg>") 14 14, auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        html.dark body {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='22' x='2' font-size='20'>🌙</text></svg>") 14 14, auto;
+        }
+
+        button, a, select, [role="button"] {
+            cursor: pointer !important;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], textarea {
+            cursor: text !important;
+            font-size: 16px !important; /* Prevents auto-zoom on mobile safari */
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5);
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        #interactiveSkyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none !important;
+            z-index: 0;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-sky-400 via-sky-200 to-sky-100 dark:from-slate-950 dark:via-slate-900 dark:to-sky-950 text-slate-800 dark:text-slate-100 transition-colors duration-500 min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
+
+    <!-- Interactive Canvas Background -->
+    <canvas id="interactiveSkyCanvas"></canvas>
+
+    <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-sky-200/60 dark:border-slate-800/80 transition-colors shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-auto min-h-[4rem] py-2 flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-3">
+            
+            <div class="flex items-center gap-2.5 w-full md:w-auto justify-between md:justify-start shrink-0">
+                <div class="flex items-center gap-2">
+                    <button onclick="spawnCloudOnClick(event)" class="flex items-center gap-1.5 text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight hover:opacity-80 transition shrink-0" title="Klik untuk melayangkan awan baru!">
+                        <span class="text-xl sm:text-2xl hover:scale-125 transition duration-300 cursor-pointer">☁️</span>
+                    </button>
+
+                    <button id="themeToggleBtn" onclick="toggleDarkMode()" class="px-2.5 py-1.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-amber-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition flex items-center gap-1 text-xs font-bold border border-slate-300/60 dark:border-slate-700/60 shadow-sm shrink-0" title="Beralih Mode Pagi / Malam">
+                        <span id="themeIcon">☀️</span>
+                        <span id="themeText" class="hidden xs:inline text-[11px]">Pagi</span>
+                    </button>
+
+                    <a href="#about" class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white whitespace-nowrap ml-1 shrink-0" id="navBrandName">
+                        Kelly Madeline Utomo
+                    </a>
+                </div>
+
+                <button onclick="openAdminModal()" class="md:hidden px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-xs shadow-md flex items-center gap-1 shrink-0">
+                    <span>🔐</span>
+                    <span>Admin</span>
+                </button>
+            </div>
+
+            <nav class="w-full md:w-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+                <a href="#beranda" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">🏠 Beranda</a>
+                <a href="#about" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">☁️ Tentang</a>
+                <a href="#education" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">🎓 Sekolah</a>
+                <a href="#skills" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">⚡ Keahlian</a>
+                <a href="#activities" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">🌟 Kegiatan</a>
+                <a href="#projects" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">📚 Proyek</a>
+                <a href="#contact" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">💬 Kontak</a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-2 shrink-0">
+                <button onclick="openAdminModal()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold text-xs shadow-md shadow-sky-500/20 hover:shadow-lg transition flex items-center gap-1.5">
+                    <span>🔐</span>
+                    <span>Admin Portal</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-16 sm:space-y-24 w-full flex-grow relative z-10">
+        
+        <!-- Hero Beranda Section -->
+        <section id="beranda" class="scroll-mt-24 relative">
+            <div class="relative bg-gradient-to-br from-white/80 via-sky-50/70 to-sky-200/60 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-sky-950/60 backdrop-blur-xl border border-white/80 dark:border-slate-800/80 rounded-3xl p-6 sm:p-10 shadow-xl overflow-hidden">
+                <div class="absolute -top-16 -left-16 w-56 h-56 bg-sky-300/40 dark:bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-16 -right-16 w-56 h-56 bg-amber-200/40 dark:bg-amber-400/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="md:col-span-7 space-y-4 text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-sky-200/80 dark:border-sky-800/80 text-sky-700 dark:text-sky-300 text-xs font-bold tracking-wide shadow-sm">
+                            <span class="animate-pulse">☁️</span> Selamat Datang di Portofolio Digital
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-sky-800 dark:text-sky-200 drop-shadow-sm">
+                                Halo, Selamat Datang!
+                            </p>
+                            <h1 class="text-4xl sm:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-tight drop-shadow-sm" id="heroName">
+                                Kelly Madeline Utomo
+                            </h1>
+                            <p class="text-lg sm:text-xl font-bold text-sky-700 dark:text-sky-300 pt-1" id="heroTagline">
+                                Siswi SMP Mutiara Bangsa 2 | Kelas 9
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-5 flex justify-center md:justify-end">
+                        <div class="relative group p-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-2 border-sky-300 dark:border-sky-700 rounded-3xl shadow-2xl transition hover:scale-105 duration-500">
+                            <div class="absolute -inset-1.5 bg-gradient-to-r from-sky-400 via-amber-300 to-rose-400 rounded-3xl blur opacity-75 group-hover:opacity-100 transition duration-500 -z-10"></div>
+                            <div class="relative w-60 h-60 sm:w-72 sm:h-72 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border-4 border-white dark:border-slate-800 shadow-inner">
+                                <img id="heroAvatar" src="https://i.pinimg.com/736x/f5/d1/75/f5d1754f3aabadcad515f5839425b469.jpg" alt="Kelly Madeline Utomo" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x400/0284c7/ffffff?text=Kelly+Madeline'">
+                            </div>
+                            <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[11px] font-extrabold px-3 py-1 rounded-full shadow-md whitespace-nowrap border border-white">
+                                ✨ <span id="heroBadgeName">Kelly Madeline Utomo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Tentang Saya -->
+        <section id="about" class="scroll-mt-24 space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100/90 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-bold">
+                    <span>☁️ Biografi & Profil</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Tentang Saya</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-base">Mengenal lebih dekat latar belakang pendidikan dan hobi pribadi saya.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-2 border-sky-300/80 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl shadow-sky-500/5 relative overflow-hidden group hover:border-sky-400 dark:hover:border-sky-500 transition duration-300">
+                    <div class="absolute -top-6 -right-6 w-28 h-28 bg-sky-400/10 dark:bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <p class="text-slate-800 dark:text-slate-100 text-base sm:text-lg leading-relaxed font-medium whitespace-pre-line text-center sm:text-left relative z-10" id="aboutBio">
+                        Halo! Saya Kelly Madeline Utomo, murid kelas 9 di SMP Mutiara Bangsa 2 Tangerang. Saya memiliki hobi memasak, mencoba resep kuliner baru, dan mengeksplorasi ilmu teknologi digital. Selamat datang di portofolio digital saya!
+                    </p>
+                </div>
+
+                <div class="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                    <a href="#education" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-sky-600/30 transition flex items-center gap-2 transform hover:-translate-y-0.5">
+                        🎓 Informasi Sekolah
+                    </a>
+                    <a href="#projects" class="px-5 py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-white font-bold text-xs sm:text-sm border border-sky-200 dark:border-slate-700 shadow-sm backdrop-blur-md transition flex items-center gap-2 transform hover:-translate-y-0.5">
+                        📂 Lihat Proyek & Tugas
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Sekolah Berjejer (2 Logo Sekolah Side-by-Side Tanpa Badge TK/SD/SMP) -->
+        <section id="education" class="scroll-mt-24 space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">🎓 Sekolah</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Klik kartu sekolah untuk melihat detail alamat dan informasi kontak.</p>
+            </div>
+
+            <div id="educationGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto pt-2">
+                <!-- Rendered dynamically side by side via JS -->
+            </div>
+        </section>
+
+        <!-- Section Keahlian -->
+        <section id="skills" class="scroll-mt-24 space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">⚡ Keahlian & Minat</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Keterampilan dan bidang yang saya tekuni dengan penuh antusias.</p>
+            </div>
+
+            <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- Section Kegiatan -->
+        <section id="activities" class="scroll-mt-24 space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">🌟 Kegiatan & Aktivitas</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Dokumentasi kegiatan harian, pembelajaran, dan aktivitas seru di sekolah.</p>
+            </div>
+
+            <div id="activitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- Section Proyek -->
+        <section id="projects" class="scroll-mt-24 space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100/90 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-bold">
+                    <span>📚 Karya & Tugas Sekolah</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Proyek & Tugas Sekolah</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-base">Kumpulan tugas pembelajaran, karya digital, dan proyek akademik pilihan.</p>
+            </div>
+
+            <div id="projectFilterContainer" class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                <!-- Filter buttons -->
+            </div>
+
+            <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- Section Kontak -->
+        <section id="contact" class="scroll-mt-24 space-y-6">
+            <div class="bg-gradient-to-br from-sky-500 to-sky-600 dark:from-slate-900 dark:to-slate-800 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden border border-sky-400 dark:border-slate-700">
+                <div class="max-w-2xl mx-auto space-y-6 text-center relative z-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold">
+                        <span>💬 Hubungi Saya</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold">Kirim Pesan & Sapaan!</h2>
+                    <p class="text-sky-100 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">Punya pertanyaan, tanggapan proyek, atau sekadar ingin menyapa? Silakan kirimkan pesan di bawah ini!</p>
+                    
+                    <form onsubmit="handleSendContactMessage(event)" class="space-y-4 text-left max-w-lg mx-auto bg-white/10 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/20 group/form">
+                        <div id="contactSuccessAlert" class="hidden bg-emerald-500/90 backdrop-blur-md text-white p-3.5 rounded-xl text-xs font-bold flex items-center justify-between border border-emerald-300 shadow-md">
+                            <span id="contactSuccessText">Pesan berhasil dikirim!</span>
+                            <button type="button" onclick="document.getElementById('contactSuccessAlert').classList.add('hidden')" class="text-white hover:text-emerald-200">✕</button>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-white">Nama Pengunjung <span class="text-amber-300">*</span></label>
+                            <input type="text" id="contactSenderName" required minlength="3" placeholder="Masukkan nama Anda..." class="w-full px-4 py-3 rounded-xl bg-white text-slate-800 text-sm outline-none transition focus:ring-2 focus:ring-sky-300">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-white">Email Pengunjung <span class="text-amber-300">*</span></label>
+                            <input type="email" id="contactSenderEmail" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl bg-white text-slate-800 text-sm outline-none transition focus:ring-2 focus:ring-sky-300">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-white">Subjek Pesan <span class="text-amber-300">*</span></label>
+                            <input type="text" id="contactSenderSubject" required minlength="4" placeholder="Topik pesan..." class="w-full px-4 py-3 rounded-xl bg-white text-slate-800 text-sm outline-none transition focus:ring-2 focus:ring-sky-300">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-white">Pesan / Sapaan <span class="text-amber-300">*</span></label>
+                            <textarea id="contactSenderMsg" rows="3" required minlength="10" placeholder="Tuliskan pesan Anda..." class="w-full px-4 py-3 rounded-xl bg-white text-slate-800 text-sm outline-none transition focus:ring-2 focus:ring-sky-300"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold text-xs sm:text-sm shadow-lg transition duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <span>🚀 Kirim Pesan Sekarang</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="w-full bg-white/80 dark:bg-slate-900/80 border-t border-sky-200 dark:border-slate-800 backdrop-blur-md relative z-10 py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-center sm:text-left space-y-1">
+                <p class="text-xs font-bold text-slate-800 dark:text-slate-200">✨ Kelly Madeline Utomo - Portofolio Digital Murid Kelas 9 SMP</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">SMP Mutiara Bangsa 2 Tangerang © 2026. Hak Cipta Dilindungi.</p>
+            </div>
+            <div id="footerSocials" class="flex items-center gap-3"></div>
+        </div>
+    </footer>
+
+    <!-- Modal Information Sekolah -->
+    <div id="schoolModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-300 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-sky-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl relative my-auto animate-in fade-in zoom-in-95 duration-200">
+            <button onclick="closeSchoolModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-rose-500 hover:text-white font-bold flex items-center justify-center transition shadow-sm z-10" title="Tutup Modal">
+                ✕
+            </button>
+
+            <div class="flex flex-col items-center text-center pt-2 space-y-3">
+                <div id="interactiveLogoBox" onmousemove="handleSchoolLogoTilt(event)" onmouseleave="resetSchoolLogoTilt()" class="relative group cursor-pointer p-4 bg-white rounded-3xl shadow-lg border-2 border-sky-200 dark:border-slate-700 transition duration-300 transform hover:scale-105">
+                    <div class="w-28 h-28 sm:w-32 sm:h-32 bg-white rounded-2xl flex items-center justify-center p-2 overflow-hidden">
+                        <img id="modalSchoolLogo" src="" alt="Logo Sekolah" class="max-w-full max-h-full object-contain">
+                    </div>
+                </div>
+
+                <div class="space-y-1 pt-1">
+                    <h3 id="modalSchoolName" class="text-xl font-extrabold text-slate-900 dark:text-white leading-tight">
+                        Nama Sekolah
+                    </h3>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                <p id="modalSchoolDesc" class="leading-relaxed text-center sm:text-left font-medium"></p>
+                <div class="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl space-y-2.5 border border-slate-200/60 dark:border-slate-800">
+                    <div class="flex items-start gap-2.5">
+                        <span class="text-base">📍</span>
+                        <div class="flex-grow">
+                            <span class="block text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Alamat Sekolah</span>
+                            <span id="modalSchoolAddress" class="text-slate-800 dark:text-slate-200 font-semibold"></span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2.5 pt-1 border-t border-slate-200/50 dark:border-slate-700/50">
+                        <span class="text-base">📞</span>
+                        <div class="flex-grow">
+                            <span class="block text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Telepon Kontak</span>
+                            <span id="modalSchoolPhone" class="text-slate-800 dark:text-slate-200 font-semibold"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 pt-1">
+                <button onclick="copySchoolAddress()" class="py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-700">
+                    <span>📋</span>
+                    <span id="copyBtnText">Salin Alamat</span>
+                </button>
+                <a id="modalSchoolWebBtn" href="#" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-extrabold text-xs shadow-md transition flex items-center justify-center gap-1.5">
+                    <span>🌐 Website Resmi</span>
+                    <span>↗</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detail Proyek -->
+    <div id="projectModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-300 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-sky-200 dark:border-slate-800 rounded-3xl max-w-xl w-full p-6 space-y-5 shadow-2xl relative my-auto animate-in fade-in zoom-in-95 duration-200">
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-rose-500 hover:text-white font-bold flex items-center justify-center transition shadow-sm z-10" title="Tutup Modal">
+                ✕
+            </button>
+
+            <div class="space-y-4">
+                <div class="relative w-full h-56 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <img id="modalProjImg" src="" alt="Proyek" class="w-full h-full object-cover">
+                    <span id="modalProjCategory" class="absolute top-3 left-3 bg-sky-500/90 text-white text-[11px] font-bold px-3 py-1 rounded-full backdrop-blur-md shadow-sm"></span>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 id="modalProjTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-tight"></h3>
+                    <p id="modalProjDesc" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium"></p>
+                </div>
+
+                <div class="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl space-y-2 border border-slate-200/60 dark:border-slate-800 text-xs">
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400">
+                        <span>🗓️ Tanggal Pengerjaan:</span>
+                        <span id="modalProjDate" class="font-bold text-slate-800 dark:text-slate-200"></span>
+                    </div>
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 border-t border-slate-200/60 dark:border-slate-700/60 pt-2">
+                        <span>🛠️ Alat & Peralatan:</span>
+                        <span id="modalProjTools" class="font-bold text-sky-600 dark:text-sky-400"></span>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                    <button onclick="closeProjectModal()" class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-bold text-xs transition">
+                        Tutup Window
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Admin Portal Modal -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-2xl hidden overflow-y-auto text-slate-100 transition-all duration-300 overscroll-contain">
+        
+        <!-- Header Top Bar Admin -->
+        <header class="w-full bg-slate-900/90 border-b border-slate-800 px-6 py-4 flex items-center justify-between shrink-0 shadow-lg sticky top-0 z-20 backdrop-blur-md">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl p-2 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/30">🔐</span>
+                <div>
+                    <h2 class="text-lg font-black text-white flex items-center gap-2">
+                        <span>Admin Portal Portofolio Digital</span>
+                        <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded-full font-bold">Full Screen Mode</span>
+                    </h2>
+                    <p class="text-xs text-slate-400">Kelola & edit seluruh konten portofolio Kelly Madeline Utomo secara penuh</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="adminLogoutHeaderBtn" onclick="logoutAdmin()" class="hidden px-3.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 text-xs font-bold transition flex items-center gap-1.5">
+                    <span>🚪</span>
+                    <span>Keluar Admin</span>
+                </button>
+                <button onclick="closeAdminModal()" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-extrabold flex items-center justify-center transition border border-slate-700" title="Tutup Portal Admin">
+                    ✕
+                </button>
+            </div>
+        </header>
+
+        <!-- Admin Content Body -->
+        <div class="p-4 sm:p-8 max-w-7xl mx-auto w-full pb-24">
+            
+            <!-- Admin Login Form (Username: kell | Password: student@mb2) -->
+            <div id="adminLoginForm" class="max-w-md mx-auto my-8 sm:my-12 bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+                <div class="text-center space-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-tr from-sky-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto text-3xl shadow-lg">
+                        🔑
+                    </div>
+                    <h3 class="text-xl font-extrabold text-white">Login Pengelola Admin</h3>
+                    <p class="text-xs text-slate-400">Masukkan Username dan Password untuk mengakses sistem pengelolaan penuh.</p>
+                </div>
+
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-300">Username Admin</label>
+                        <input type="text" id="adminUsernameInput" required placeholder="kell" class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm outline-none focus:border-sky-500 transition">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-300">Password Keamanan</label>
+                        <input type="password" id="adminPasswordInput" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm outline-none focus:border-sky-500 transition">
+                    </div>
+
+                    <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-xs sm:text-sm shadow-lg transition duration-200 transform hover:-translate-y-0.5">
+                        🔓 Masuk Dasbor Pengelolaan Admin
+                    </button>
+                </form>
+            </div>
+
+            <!-- Fullscreen Admin Dashboard Tabs Container -->
+            <div id="adminDashboard" class="hidden space-y-6">
+                
+                <!-- Navigation Tabs Bar -->
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar border-b border-slate-800 pb-3">
+                    <button onclick="switchAdminTab('profile')" id="adminTabBtn-profile" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center gap-2 shrink-0 bg-sky-500 text-white shadow-md">
+                        <span>👤</span>
+                        <span>Profil & Biografi</span>
+                    </button>
+                    <button onclick="switchAdminTab('projects')" id="adminTabBtn-projects" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center gap-2 shrink-0 bg-slate-800 text-slate-300 hover:bg-slate-700">
+                        <span>📚</span>
+                        <span>Kelola Proyek (${projectsData.length})</span>
+                    </button>
+                    <button onclick="switchAdminTab('activities')" id="adminTabBtn-activities" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center gap-2 shrink-0 bg-slate-800 text-slate-300 hover:bg-slate-700">
+                        <span>🌟</span>
+                        <span>Kelola Kegiatan (${activitiesData.length})</span>
+                    </button>
+                    <button onclick="switchAdminTab('skills')" id="adminTabBtn-skills" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center gap-2 shrink-0 bg-slate-800 text-slate-300 hover:bg-slate-700">
+                        <span>⚡</span>
+                        <span>Kelola Keahlian (${skillsData.length})</span>
+                    </button>
+                </div>
+
+                <!-- Tab 1: Edit Profile -->
+                <div id="adminTabContent-profile" class="space-y-6">
+                    <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl space-y-6 shadow-xl">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <div>
+                                <h3 class="text-base font-extrabold text-white">✏️ Edit Informasi Profil & Biografi Utamamu</h3>
+                                <p class="text-xs text-slate-400">Ubah nama, slogan, foto avatar, dan biografi diri Kelly yang tampil di halaman depan.</p>
+                            </div>
+                        </div>
+
+                        <form onsubmit="handleSaveHeroProfile(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="block text-xs font-bold text-slate-300">Nama Lengkap</label>
+                                    <input type="text" id="adminEditName" required class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs outline-none focus:border-sky-500">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-xs font-bold text-slate-300">Slogan / Sekolah / Kelas</label>
+                                    <input type="text" id="adminEditTagline" required class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs outline-none focus:border-sky-500">
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold text-slate-300">URL Gambar Foto Profile</label>
+                                <input type="text" id="adminEditAvatar" required class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs outline-none focus:border-sky-500">
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold text-slate-300">Teks Biografi Paragraf "Tentang Saya"</label>
+                                <textarea id="adminEditBio" rows="4" required class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs outline-none focus:border-sky-500"></textarea>
+                            </div>
+
+                            <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-lg transition flex items-center gap-2">
+                                <span>💾 Simpan Perubahan Profil</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Manage Projects (CRUD) -->
+                <div id="adminTabContent-projects" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        
+                        <!-- Form Tambah Proyek -->
+                        <div class="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+                            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                                <span>➕ Tambah Karya Proyek Baru</span>
+                            </h3>
+
+                            <form onsubmit="handleAddNewProject(event)" class="space-y-3">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Judul Karya / Proyek</label>
+                                    <input type="text" id="newProjTitle" required placeholder="Judul proyek..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Kategori</label>
+                                        <select id="newProjCategory" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                            <option value="cooking">Kuliner & Baking</option>
+                                            <option value="tech">Teknologi & Coding</option>
+                                            <option value="creative">Desain & Kreatif</option>
+                                            <option value="academic">Sains & Akademik</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Tanggal / Status</label>
+                                        <input type="text" id="newProjDate" required placeholder="Februari 2026 / Segera Hadir" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Badge Status (Contoh: Segera Hadir / Upcoming)</label>
+                                    <input type="text" id="newProjBadge" placeholder="Opsional (misal: Upcoming / Segera Hadir / Baru)" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">URL Foto Gambar Proyek</label>
+                                    <input type="text" id="newProjImg" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Deskripsi Karya</label>
+                                    <textarea id="newProjDesc" rows="3" required placeholder="Penjelasan mengenai karya ini..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Alat / Tools</label>
+                                    <input type="text" id="newProjTools" required placeholder="HTML, Canva, Baking Tools, dll." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                </div>
+
+                                <button type="submit" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md transition">
+                                    🚀 Tambahkan Proyek Sekarang
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Daftar Proyek & Aksi Hapus/Edit -->
+                        <div class="lg:col-span-7 bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+                            <h3 class="text-sm font-extrabold text-white">📋 Daftar Proyek Terpasang</h3>
+                            <div id="adminProjectsList" class="space-y-3">
+                                <!-- Admin projects list rendered via JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab 3: Manage Activities (CRUD) -->
+                <div id="adminTabContent-activities" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        
+                        <!-- Form Tambah Kegiatan -->
+                        <div class="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+                            <h3 class="text-sm font-extrabold text-white">➕ Tambah Kegiatan / Aktivitas Baru</h3>
+
+                            <form onsubmit="handleAddNewActivity(event)" class="space-y-3">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Nama / Judul Kegiatan</label>
+                                    <input type="text" id="newActTitle" required placeholder="Judul kegiatan..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Ikon Emoji</label>
+                                        <input type="text" id="newActIcon" required placeholder="🧁" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Tanggal</label>
+                                        <input type="text" id="newActDate" required placeholder="Januari 2026" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">URL Foto Foto Dokumentasi</label>
+                                    <input type="text" id="newActImg" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Deskripsi Kegiatan</label>
+                                    <textarea id="newActDesc" rows="3" required placeholder="Penjelasan ringkas kegiatan..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md transition">
+                                    🌟 Tambahkan Kegiatan Baru
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Daftar Kegiatan & Aksi Hapus -->
+                        <div class="lg:col-span-7 bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+                            <h3 class="text-sm font-extrabold text-white">📋 Daftar Kegiatan Terpasang</h3>
+                            <div id="adminActivitiesList" class="space-y-3">
+                                <!-- Admin activities list rendered via JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab 4: Manage Skills (CRUD) -->
+                <div id="adminTabContent-skills" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        
+                        <!-- Form Tambah Keahlian -->
+                        <div class="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+                            <h3 class="text-sm font-extrabold text-white">➕ Tambah Keahlian & Minat</h3>
+
+                            <form onsubmit="handleAddNewSkill(event)" class="space-y-3">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Nama Keahlian</label>
+                                    <input type="text" id="newSkillName" required placeholder="Seni Memasak, Coding, dll." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Emoji</label>
+                                        <input type="text" id="newSkillIcon" required placeholder="🍳" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Kategori</label>
+                                        <input type="text" id="newSkillCategory" required placeholder="Kuliner" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Tingkat</label>
+                                        <select id="newSkillLevel" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                                            <option value="Mahir">Mahir</option>
+                                            <option value="Menengah">Menengah</option>
+                                            <option value="Dasar">Dasar</option>
+                                            <option value="Aktif">Aktif</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md transition">
+                                    ⚡ Tambahkan Keahlian
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Daftar Keahlian & Aksi Hapus -->
+                        <div class="lg:col-span-7 bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4 shadow-xl">
+                            <h3 class="text-sm font-extrabold text-white">📋 Daftar Keahlian Terpasang</h3>
+                            <div id="adminSkillsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Admin skills list rendered via JS -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Items Admin -->
+    <div id="adminEditModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-300 overflow-y-auto">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 space-y-5 shadow-2xl relative my-auto animate-in fade-in zoom-in-95 duration-200 text-white">
+            <button onclick="closeAdminEditModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 text-slate-400 hover:bg-rose-500 hover:text-white font-bold flex items-center justify-center transition shadow-sm z-10" title="Tutup">
+                ✕
+            </button>
+
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="text-2xl" id="adminEditModalIcon">✏️</span>
+                <div>
+                    <h3 id="adminEditModalTitle" class="text-base font-extrabold text-white">Edit Data Admin</h3>
+                    <p class="text-xs text-slate-400">Perbarui informasi detail di bawah ini</p>
+                </div>
+            </div>
+
+            <!-- Dynamic Form Area -->
+            <form id="adminEditDynamicForm" onsubmit="handleSaveAdminEdit(event)" class="space-y-4">
+                <div id="adminEditFormFields" class="space-y-3">
+                    <!-- Dynamic form inputs inserted via JS -->
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
+                    <button type="button" onclick="closeAdminEditModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md transition">
+                        💾 Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl border border-slate-700 text-xs font-bold hidden flex items-center gap-2 animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <span id="toastIcon">✨</span>
+        <span id="toastMessage">Pesan Notifikasi</span>
+    </div>
+
+    <script>
+        // Data Hero Profile Persisted
+        let heroData = JSON.parse(localStorage.getItem('kellyHeroData')) || {
+            name: 'Kelly Madeline Utomo',
+            tagline: 'Siswi SMP Mutiara Bangsa 2 | Kelas 9',
+            bio: 'Halo! Saya Kelly Madeline Utomo, murid kelas 9 di SMP Mutiara Bangsa 2 Tangerang. Saya memiliki hobi memasak, mencoba resep kuliner baru, dan mengeksplorasi ilmu teknologi digital. Selamat datang di portofolio digital saya!',
+            avatarUrl: 'https://i.pinimg.com/736x/f5/d1/75/f5d1754f3aabadcad515f5839425b469.jpg'
+        };
+        heroData.avatarUrl = 'https://i.pinimg.com/736x/f5/d1/75/f5d1754f3aabadcad515f5839425b469.jpg';
+
+        // Data Sekolah Berjejer (2 Logo Sekolah Side by Side tanpa TK/SD/SMP)
+        const schoolsData = [
+            {
+                id: 'mutiarabangsa2',
+                title: 'Mutiara Bangsa 2',
+                logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnvmIoHEAEoy_F7s-7zgTVApFNEuEw1ek6JkFaimSo7Q&s=10',
+                desc: 'Institusi pendidikan Mutiara Bangsa 2 Tangerang tempat mengasah potensi akademik, teknologi digital, serta pengembangan bakat dan karakter murid.',
+                address: 'Jl. Komp. Villa Bandara, Tangerang, Banten',
+                phone: '(021) 5591-2345',
+                web: 'https://mutiarabangsa2.sch.id'
+            },
+            {
+                id: 'santapatricia',
+                title: 'Santa Patricia',
+                logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRDYNq70zidnkyzwmH7tFZGS1kQjIgFxc-GLIJmubyAQ&s=10',
+                desc: 'Almamater Sekolah Santa Patricia tempat pertama kali mengasah minat bakat awal, bersosialisasi, dan mengeksplorasi kreativitas seni.',
+                address: 'Jl. Santa Patricia No. 12, Tangerang',
+                phone: '(021) 551-0001',
+                web: 'https://santapatricia.sch.id'
+            }
+        ];
+
+        // Data Keahlian Initial
+        let skillsData = JSON.parse(localStorage.getItem('kellySkillsData')) || [
+            { id: 1, name: 'Seni Memasak & Baking', icon: '🍳', category: 'Kuliner', level: 'Mahir' },
+            { id: 2, name: 'Teknologi Digital & Coding', icon: '💻', category: 'Teknologi', level: 'Menengah' },
+            { id: 3, name: 'Desain Grafis (Canva)', icon: '🎨', category: 'Desain', level: 'Mahir' },
+            { id: 4, name: 'Komunikasi & Presentasi', icon: '🗣️', category: 'Soft Skill', level: 'Mahir' },
+            { id: 5, name: 'Bahasa Inggris', icon: '🌐', category: 'Bahasa', level: 'Aktif' },
+            { id: 6, name: 'Praktikum Sains & Matematika', icon: '🔬', category: 'Akademik', level: 'Menengah' },
+            { id: 7, name: 'Manajemen Waktu & Tugas', icon: '⏱️', category: 'Organisasi', level: 'Mahir' },
+            { id: 8, name: 'Kreativitas Produk', icon: '✨', category: 'Kreatif', level: 'Mahir' }
+        ];
+
+        // Data Kegiatan Initial
+        let activitiesData = JSON.parse(localStorage.getItem('kellyActivitiesData')) || [
+            {
+                id: 1,
+                title: 'Workshop Kuliner & Lomba Baking Sekolah',
+                date: 'Januari 2026',
+                icon: '🧁',
+                img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&auto=format&fit=crop&q=80',
+                desc: 'Menciptakan resep pastry dan dessert kreasi baru yang memadukan cita rasa lokal dengan tampilan estetik.'
+            },
+            {
+                id: 2,
+                title: 'Proyek Komputer & Pemrograman Web',
+                date: 'Desember 2025',
+                icon: '🖥️',
+                img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&auto=format&fit=crop&q=80',
+                desc: 'Eksplorasi pembuatan portofolio digital berbasis HTML & Tailwind CSS di laboratorium komputer sekolah.'
+            },
+            {
+                id: 3,
+                title: 'Eksperimen Laboratorium IPA',
+                date: 'November 2025',
+                icon: '🧪',
+                img: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&auto=format&fit=crop&q=80',
+                desc: 'Melakukan uji reaksi kimia sederhana dan observasi mikroskopis struktur sel tanaman bersama kelompok.'
+            },
+            {
+                id: 4,
+                title: 'Kegiatan Organisasi & Bakti Sosial',
+                date: 'Oktober 2025',
+                icon: '🤝',
+                img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop&q=80',
+                desc: 'Berpartisipasi aktif dalam kegiatan berbagi kasih dan penataan bazar karya murid SMP Mutiara Bangsa 2.'
+            }
+        ];
+
+        // Data Proyek Initial
+        let projectsData = JSON.parse(localStorage.getItem('kellyProjectsData_v2')) || [
+            {
+                id: 5,
+                title: 'Project Database Firebase (Coming Soon P7)',
+                category: 'tech',
+                categoryLabel: 'Teknologi',
+                badge: 'Upcoming',
+                date: 'Segera Hadir',
+                img: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=80',
+                desc: 'Aplikasi interaktif yang terhubung ke cloud database realtime',
+                tools: 'Firebase Realtime DB, Firestore, JavaScript'
+            },
+            {
+                id: 1,
+                title: 'Portofolio Web Interaktif Murid',
+                category: 'tech',
+                categoryLabel: 'Teknologi',
+                date: 'Februari 2026',
+                img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80',
+                desc: 'Situs portofolio pribadi responsif yang dibuat menggunakan Tailwind CSS dan JavaScript interaktif dengan fitur tema pagi/malam.',
+                tools: 'HTML5, Tailwind CSS, JavaScript'
+            },
+            {
+                id: 2,
+                title: 'E-Book Resep Dessert Manis Kebanggaan',
+                category: 'cooking',
+                categoryLabel: 'Kuliner',
+                date: 'Januari 2026',
+                img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&auto=format&fit=crop&q=80',
+                desc: 'Kompilasi 10 resep dessert ciptaan sendiri lengkap dengan langkah-langkah, foto dokumentasi, dan tips memanggang kue.',
+                tools: 'Canva, Peralatan Baking, Photography'
+            },
+            {
+                id: 3,
+                title: 'Poster Digital Kampanye Lingkungan Hijau',
+                category: 'creative',
+                categoryLabel: 'Desain',
+                date: 'November 2025',
+                img: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&auto=format&fit=crop&q=80',
+                desc: 'Desain infografis kampanye daur ulang sampah plastik di lingkungan sekolah SMP Mutiara Bangsa 2.',
+                tools: 'Canva Pro, Digital Illustration'
+            },
+            {
+                id: 4,
+                title: 'Laporan Eksperimen Fotosintesis',
+                category: 'academic',
+                categoryLabel: 'Sains',
+                date: 'Oktober 2025',
+                img: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?w=600&auto=format&fit=crop&q=80',
+                desc: 'Laporan ilmiah pengamatan laju fotosintesis pada tanaman Hydrilla verticillata dengan pengaruh intensitas cahaya.',
+                tools: 'Ms. Word, Alat Lab IPA'
+            }
+        ];
+
+        // Social Links
+        const socialsData = [
+            { name: 'Instagram', icon: 'fa-brands fa-instagram', url: 'https://instagram.com' },
+            { name: 'TikTok', icon: 'fa-brands fa-tiktok', url: 'https://tiktok.com' },
+            { name: 'GitHub', icon: 'fa-brands fa-github', url: 'https://github.com' },
+            { name: 'Email', icon: 'fa-solid fa-envelope', url: 'mailto:kelly@example.com' }
+        ];
+
+        let selectedSchoolForModal = null;
+        let currentProjectFilter = 'all';
+        let isAdminLoggedIn = false;
+        let editingAdminTarget = { type: null, id: null };
+
+        const canvas = document.getElementById('interactiveSkyCanvas');
+        const ctx = canvas.getContext('2d');
+        let canvasWidth = window.innerWidth;
+        let canvasHeight = window.innerHeight;
+        let cloudsArray = [];
+        let starsArray = [];
+
+        function resizeCanvas() {
+            canvasWidth = window.innerWidth;
+            canvasHeight = window.innerHeight;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            initCanvasElements();
+        }
+
+        class CloudParticle {
+            constructor(x, y, scale, speed) {
+                this.x = x || Math.random() * canvasWidth;
+                this.y = y || Math.random() * (canvasHeight * 0.5);
+                this.scale = scale || Math.random() * 0.5 + 0.4;
+                this.speed = speed || Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.3 + 0.4;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.scale, this.scale);
+                ctx.fillStyle = document.documentElement.classList.contains('dark') 
+                    ? `rgba(51, 65, 85, ${this.opacity * 0.5})` 
+                    : `rgba(255, 255, 255, ${this.opacity})`;
+
+                ctx.beginPath();
+                ctx.arc(0, 0, 30, 0, Math.PI * 2);
+                ctx.arc(25, -15, 25, 0, Math.PI * 2);
+                ctx.arc(55, 0, 25, 0, Math.PI * 2);
+                ctx.arc(40, 15, 20, 0, Math.PI * 2);
+                ctx.arc(15, 15, 20, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.x += this.speed;
+                if (this.x - 100 > canvasWidth) {
+                    this.x = -100;
+                    this.y = Math.random() * (canvasHeight * 0.5);
+                }
+            }
+        }
+
+        class StarParticle {
+            constructor() {
+                this.x = Math.random() * canvasWidth;
+                this.y = Math.random() * canvasHeight;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.opacity = Math.random();
+                this.speed = Math.random() * 0.02 + 0.005;
+            }
+
+            draw() {
+                if (!document.documentElement.classList.contains('dark')) return;
+                ctx.save();
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(Math.sin(this.opacity))})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.opacity += this.speed;
+            }
+        }
+
+        function initCanvasElements() {
+            cloudsArray = [];
+            starsArray = [];
+            for (let i = 0; i < 7; i++) {
+                cloudsArray.push(new CloudParticle());
+            }
+            for (let i = 0; i < 40; i++) {
+                starsArray.push(new StarParticle());
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            
+            starsArray.forEach(star => {
+                star.update();
+                star.draw();
+            });
+
+            cloudsArray.forEach(cloud => {
+                cloud.update();
+                cloud.draw();
+            });
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        function spawnCloudOnClick(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX || rect.width / 2;
+            const clickY = e.clientY || rect.height / 3;
+            cloudsArray.push(new CloudParticle(clickX - 30, clickY, Math.random() * 0.6 + 0.5, Math.random() * 0.5 + 0.2));
+            showToast('☁️ Awan baru diterbangkan!');
+        }
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Pagi';
+                localStorage.setItem('portfolioTheme', 'light');
+                showToast('☀️ Berhasil beralih ke Mode Pagi');
+            } else {
+                html.classList.add('dark');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Malam';
+                localStorage.setItem('portfolioTheme', 'dark');
+                showToast('🌙 Berhasil beralih ke Mode Malam');
+            }
+        }
+
+        // Render Hero Profile Content
+        function renderHeroProfile() {
+            document.getElementById('navBrandName').textContent = heroData.name;
+            document.getElementById('heroName').textContent = heroData.name;
+            document.getElementById('heroBadgeName').textContent = heroData.name;
+            document.getElementById('heroTagline').textContent = heroData.tagline;
+            document.getElementById('aboutBio').textContent = heroData.bio;
+            
+            const avatarImg = document.getElementById('heroAvatar');
+            if (heroData.avatarUrl) {
+                avatarImg.src = heroData.avatarUrl;
+            }
+        }
+
+        // Render Education Section (2 Logo Sekolah Side by Side Berjejer)
+        function renderEducation() {
+            const container = document.getElementById('educationGrid');
+            container.innerHTML = schoolsData.map(school => `
+                <div onclick="openSchoolModal('${school.id}')" class="group cursor-pointer bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-2 border-sky-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-sky-400/10 dark:bg-sky-500/10 rounded-full blur-xl group-hover:scale-150 transition duration-500"></div>
+                    
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white dark:bg-slate-800 border-2 border-sky-300 dark:border-slate-700 flex items-center justify-center p-2 overflow-hidden shrink-0 group-hover:rotate-6 transition duration-300 shadow-md">
+                            <img src="${school.logo}" alt="${school.title}" class="w-full h-full object-contain">
+                        </div>
+                        <div class="space-y-1 flex-grow">
+                            <h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">
+                                ${school.title}
+                            </h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
+                                ${school.desc}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-extrabold text-sky-600 dark:text-sky-400">
+                        <span>Lihat Alamat & Detail</span>
+                        <span class="group-hover:translate-x-1 transition">➔</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Skills
+        function renderSkills() {
+            const container = document.getElementById('skillsGrid');
+            container.innerHTML = skillsData.map(skill => `
+                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-sky-200/70 dark:border-slate-800 rounded-2xl p-4 shadow-sm hover:shadow-md transition text-center space-y-2 group">
+                    <div class="text-3xl group-hover:scale-125 transition duration-300">${skill.icon}</div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white">${skill.name}</h4>
+                        <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">${skill.category} • ${skill.level}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Activities
+        function renderActivities() {
+            const container = document.getElementById('activitiesGrid');
+            container.innerHTML = activitiesData.map(act => `
+                <div class="bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-sky-200/70 dark:border-slate-800 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                        <img src="${act.img || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80'}" alt="${act.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 left-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-extrabold text-slate-800 dark:text-white flex items-center gap-1.5 shadow-md">
+                            <span>${act.icon}</span>
+                            <span>${act.date}</span>
+                        </div>
+                    </div>
+                    <div class="p-5 space-y-2 flex-grow flex flex-col justify-between">
+                        <h3 class="text-base font-extrabold text-slate-900 dark:text-white group-hover:text-sky-600 transition">${act.title}</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">${act.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Project Filters
+        function renderProjectFilters() {
+            const filterContainer = document.getElementById('projectFilterContainer');
+            const categories = [
+                { id: 'all', label: '🌟 Semua Karya' },
+                { id: 'cooking', label: '🍳 Kuliner & Baking' },
+                { id: 'tech', label: '💻 Teknologi Digital' },
+                { id: 'creative', label: '🎨 Desain & Kreatif' },
+                { id: 'academic', label: '🔬 Sains & Akademik' }
+            ];
+
+            filterContainer.innerHTML = categories.map(cat => `
+                <button onclick="filterProjects('${cat.id}')" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all shadow-sm ${currentProjectFilter === cat.id ? 'bg-sky-500 text-white shadow-sky-500/30' : 'bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-sky-100 dark:hover:bg-slate-700'}">
+                    ${cat.label}
+                </button>
+            `).join('');
+        }
+
+        // Render Projects Grid
+        function renderProjects() {
+            const container = document.getElementById('projectsGrid');
+            const filtered = currentProjectFilter === 'all' 
+                ? projectsData 
+                : projectsData.filter(p => p.category === currentProjectFilter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white/50 dark:bg-slate-900/50 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 space-y-2">
+                        <span class="text-3xl">📂</span>
+                        <p class="text-xs sm:text-sm font-bold text-slate-500">Belum ada karya untuk kategori ini.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(proj => `
+                <div onclick="openProjectModal(${proj.id})" class="group cursor-pointer bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border border-sky-200/80 dark:border-slate-800 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 flex flex-col justify-between transform hover:-translate-y-1">
+                    <div>
+                        <div class="relative h-44 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                            <img src="${proj.img || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80'}" alt="${proj.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-sky-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-md">
+                                ${proj.categoryLabel}
+                            </span>
+                            ${proj.badge ? `
+                            <span class="absolute top-3 right-3 bg-amber-400 text-slate-900 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 animate-pulse">
+                                🚀 ${proj.badge}
+                            </span>
+                            ` : ''}
+                        </div>
+                        <div class="p-5 space-y-2">
+                            <span class="text-[11px] font-bold text-slate-400">${proj.date}</span>
+                            <h3 class="text-base font-extrabold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition leading-snug">
+                                ${proj.title}
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 font-medium">
+                                ${proj.desc}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-0 flex items-center justify-between text-xs font-bold text-sky-600 dark:text-sky-400">
+                        <span>Detail Karya</span>
+                        <span class="group-hover:translate-x-1 transition">➔</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterProjects(catId) {
+            currentProjectFilter = catId;
+            renderProjectFilters();
+            renderProjects();
+        }
+
+        // Render Socials
+        function renderSocials() {
+            const container = document.getElementById('footerSocials');
+            container.innerHTML = socialsData.map(soc => `
+                <a href="${soc.url}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-sky-500 hover:text-white transition flex items-center justify-center text-sm shadow-sm" title="${soc.name}">
+                    <i class="${soc.icon}"></i>
+                </a>
+            `).join('');
+        }
+
+        // School Modal Logic
+        function openSchoolModal(schoolId) {
+            const school = schoolsData.find(s => s.id === schoolId);
+            if (!school) return;
+            selectedSchoolForModal = school;
+
+            document.getElementById('modalSchoolLogo').src = school.logo;
+            document.getElementById('modalSchoolName').textContent = school.title;
+            document.getElementById('modalSchoolDesc').textContent = school.desc;
+            document.getElementById('modalSchoolAddress').textContent = school.address;
+            document.getElementById('modalSchoolPhone').textContent = school.phone;
+            document.getElementById('modalSchoolWebBtn').href = school.web;
+
+            document.getElementById('schoolModal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeSchoolModal() {
+            document.getElementById('schoolModal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function handleSchoolLogoTilt(e) {
+            const box = document.getElementById('interactiveLogoBox');
+            const rect = box.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            box.style.transform = `scale(1.05) rotateX(${-y / 4}deg) rotateY(${x / 4}deg)`;
+        }
+
+        function resetSchoolLogoTilt() {
+            const box = document.getElementById('interactiveLogoBox');
+            box.style.transform = `scale(1) rotateX(0deg) rotateY(0deg)`;
+        }
+
+        function copySchoolAddress() {
+            if (!selectedSchoolForModal) return;
+            const textToCopy = `${selectedSchoolForModal.title} - ${selectedSchoolForModal.address}`;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy);
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                } catch (err) {}
+                document.body.removeChild(textArea);
+            }
+
+            const copyBtnText = document.getElementById('copyBtnText');
+            copyBtnText.textContent = 'Tersalin! ✓';
+            setTimeout(() => {
+                copyBtnText.textContent = 'Salin Alamat';
+            }, 2000);
+            showToast('📋 Alamat sekolah berhasil disalin!');
+        }
+
+        // Project Detail Modal
+        function openProjectModal(projId) {
+            const proj = projectsData.find(p => p.id === projId);
+            if (!proj) return;
+
+            document.getElementById('modalProjImg').src = proj.img || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80';
+            document.getElementById('modalProjTitle').textContent = proj.title;
+            document.getElementById('modalProjCategory').textContent = proj.categoryLabel;
+            document.getElementById('modalProjDesc').textContent = proj.desc;
+            document.getElementById('modalProjDate').textContent = proj.date;
+            document.getElementById('modalProjTools').textContent = proj.tools;
+
+            document.getElementById('projectModal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeProjectModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Admin Portal Logic
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            if (isAdminLoggedIn) {
+                populateAdminForms();
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('adminUsernameInput').value;
+            const pass = document.getElementById('adminPasswordInput').value;
+
+            if (user === 'kell' && pass === 'student@mb2') {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLoginForm').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                document.getElementById('adminLogoutHeaderBtn').classList.remove('hidden');
+                populateAdminForms();
+                showToast('🔓 Login Admin Berhasil!');
+            } else {
+                showToast('❌ Username atau Password salah!');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminLoginForm').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('adminLogoutHeaderBtn').classList.add('hidden');
+            document.getElementById('adminUsernameInput').value = '';
+            document.getElementById('adminPasswordInput').value = '';
+            showToast('🔒 Berhasil keluar dari Admin Portal');
+        }
+
+        function switchAdminTab(tabName) {
+            const tabs = ['profile', 'projects', 'activities', 'skills'];
+            tabs.forEach(tab => {
+                const btn = document.getElementById(`adminTabBtn-${tab}`);
+                const content = document.getElementById(`adminTabContent-${tab}`);
+                if (btn && content) {
+                    if (tab === tabName) {
+                        content.classList.remove('hidden');
+                        btn.className = 'px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center gap-2 shrink-0 bg-sky-500 text-white shadow-md';
+                    } else {
+                        content.classList.add('hidden');
+                        btn.className = 'px-4 py-2.5 rounded-xl text-xs font-extrabold transition flex items-center gap-2 shrink-0 bg-slate-800 text-slate-300 hover:bg-slate-700';
+                    }
+                }
+            });
+        }
+
+        // Auto-scroll input to visible area on focus
+        document.addEventListener('focusin', function(e) {
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+                setTimeout(() => {
+                    e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        });
+
+        // Populate Forms in Admin Dashboard
+        function populateAdminForms() {
+            // Profile Form
+            document.getElementById('adminEditName').value = heroData.name;
+            document.getElementById('adminEditTagline').value = heroData.tagline;
+            document.getElementById('adminEditAvatar').value = heroData.avatarUrl;
+            document.getElementById('adminEditBio').value = heroData.bio;
+
+            // Render admin lists for CRUD actions
+            renderAdminProjectsList();
+            renderAdminActivitiesList();
+            renderAdminSkillsList();
+        }
+
+        // Save Hero Profile
+        function handleSaveHeroProfile(e) {
+            e.preventDefault();
+            heroData.name = document.getElementById('adminEditName').value;
+            heroData.tagline = document.getElementById('adminEditTagline').value;
+            heroData.avatarUrl = document.getElementById('adminEditAvatar').value;
+            heroData.bio = document.getElementById('adminEditBio').value;
+
+            localStorage.setItem('kellyHeroData', JSON.stringify(heroData));
+            renderHeroProfile();
+            showToast('✨ Profil berhasil diperbarui!');
+        }
+
+        // Admin Projects CRUD
+        function renderAdminProjectsList() {
+            const container = document.getElementById('adminProjectsList');
+            if (projectsData.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic">Belum ada proyek terdaftar.</p>`;
+                return;
+            }
+
+            container.innerHTML = projectsData.map(p => `
+                <div class="bg-slate-800 border border-slate-700 p-3.5 rounded-2xl flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <img src="${p.img || 'https://placehold.co/100x100'}" class="w-12 h-12 rounded-xl object-cover shrink-0">
+                        <div class="truncate">
+                            <div class="flex items-center gap-2">
+                                <h4 class="text-xs font-extrabold text-white truncate">${p.title}</h4>
+                                ${p.badge ? `<span class="bg-amber-400/20 text-amber-300 text-[9px] font-black px-2 py-0.5 rounded-full border border-amber-400/30">${p.badge}</span>` : ''}
+                            </div>
+                            <p class="text-[10px] text-slate-400">${p.categoryLabel} • ${p.date}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="openEditProjectModal(${p.id})" class="px-2.5 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500/40 border border-sky-500/30 text-xs font-bold transition">
+                            ✏️ Edit
+                        </button>
+                        <button onclick="deleteProject(${p.id})" class="px-2.5 py-1.5 rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 border border-rose-500/30 text-xs font-bold transition">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleAddNewProject(e) {
+            e.preventDefault();
+            const title = document.getElementById('newProjTitle').value;
+            const category = document.getElementById('newProjCategory').value;
+            const date = document.getElementById('newProjDate').value;
+            const badge = document.getElementById('newProjBadge').value;
+            const img = document.getElementById('newProjImg').value;
+            const desc = document.getElementById('newProjDesc').value;
+            const tools = document.getElementById('newProjTools').value;
+
+            const categoryLabels = {
+                cooking: 'Kuliner',
+                tech: 'Teknologi',
+                creative: 'Desain',
+                academic: 'Sains'
+            };
+
+            const newProj = {
+                id: Date.now(),
+                title,
+                category,
+                categoryLabel: categoryLabels[category] || 'Umum',
+                date,
+                badge: badge || null,
+                img: img || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80',
+                desc,
+                tools
+            };
+
+            projectsData.unshift(newProj);
+            localStorage.setItem('kellyProjectsData_v2', JSON.stringify(projectsData));
+            renderProjects();
+            renderAdminProjectsList();
+            showToast('🚀 Proyek baru berhasil ditambahkan!');
+            e.target.reset();
+
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+            }
+        }
+
+        function deleteProject(id) {
+            projectsData = projectsData.filter(p => p.id !== id);
+            localStorage.setItem('kellyProjectsData_v2', JSON.stringify(projectsData));
+            renderProjects();
+            renderAdminProjectsList();
+            showToast('🗑️ Proyek berhasil dihapus!');
+        }
+
+        // Admin Activities CRUD
+        function renderAdminActivitiesList() {
+            const container = document.getElementById('adminActivitiesList');
+            if (activitiesData.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic">Belum ada kegiatan terdaftar.</p>`;
+                return;
+            }
+
+            container.innerHTML = activitiesData.map(act => `
+                <div class="bg-slate-800 border border-slate-700 p-3.5 rounded-2xl flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <span class="text-2xl shrink-0">${act.icon}</span>
+                        <div class="truncate">
+                            <h4 class="text-xs font-extrabold text-white truncate">${act.title}</h4>
+                            <p class="text-[10px] text-slate-400">${act.date}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="openEditActivityModal(${act.id})" class="px-2.5 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500/40 border border-sky-500/30 text-xs font-bold transition">
+                            ✏️ Edit
+                        </button>
+                        <button onclick="deleteActivity(${act.id})" class="px-2.5 py-1.5 rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 border border-rose-500/30 text-xs font-bold transition">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleAddNewActivity(e) {
+            e.preventDefault();
+            const title = document.getElementById('newActTitle').value;
+            const icon = document.getElementById('newActIcon').value;
+            const date = document.getElementById('newActDate').value;
+            const img = document.getElementById('newActImg').value;
+            const desc = document.getElementById('newActDesc').value;
+
+            const newAct = {
+                id: Date.now(),
+                title,
+                icon,
+                date,
+                img: img || 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&auto=format&fit=crop&q=80',
+                desc
+            };
+
+            activitiesData.unshift(newAct);
+            localStorage.setItem('kellyActivitiesData', JSON.stringify(activitiesData));
+            renderActivities();
+            renderAdminActivitiesList();
+            showToast('🌟 Kegiatan baru berhasil ditambahkan!');
+            e.target.reset();
+        }
+
+        function deleteActivity(id) {
+            activitiesData = activitiesData.filter(a => a.id !== id);
+            localStorage.setItem('kellyActivitiesData', JSON.stringify(activitiesData));
+            renderActivities();
+            renderAdminActivitiesList();
+            showToast('🗑️ Kegiatan berhasil dihapus!');
+        }
+
+        // Admin Skills CRUD
+        function renderAdminSkillsList() {
+            const container = document.getElementById('adminSkillsList');
+            if (skillsData.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic">Belum ada keahlian terdaftar.</p>`;
+                return;
+            }
+
+            container.innerHTML = skillsData.map(s => `
+                <div class="bg-slate-800 border border-slate-700 p-3 rounded-2xl flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2 truncate">
+                        <span class="text-xl shrink-0">${s.icon}</span>
+                        <div class="truncate">
+                            <h4 class="text-xs font-extrabold text-white truncate">${s.name}</h4>
+                            <p class="text-[10px] text-slate-400">${s.category} • ${s.level}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button onclick="openEditSkillModal(${s.id})" class="px-2 py-1 rounded-lg bg-sky-500/20 text-sky-300 hover:bg-sky-500/40 text-[11px] font-bold transition">
+                            ✏️
+                        </button>
+                        <button onclick="deleteSkill(${s.id})" class="px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 text-[11px] font-bold transition">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Admin Unified Edit Handlers
+        function openEditProjectModal(id) {
+            const proj = projectsData.find(p => p.id === id);
+            if (!proj) return;
+            editingAdminTarget = { type: 'project', id: id };
+
+            document.getElementById('adminEditModalIcon').textContent = '📚';
+            document.getElementById('adminEditModalTitle').textContent = 'Edit Proyek / Karya';
+
+            const fieldsHtml = `
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Judul Proyek</label>
+                    <input type="text" id="editProjTitle" value="${proj.title.replace(/"/g, '&quot;')}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Kategori</label>
+                        <select id="editProjCategory" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                            <option value="cooking" ${proj.category === 'cooking' ? 'selected' : ''}>Kuliner & Baking</option>
+                            <option value="tech" ${proj.category === 'tech' ? 'selected' : ''}>Teknologi & Coding</option>
+                            <option value="creative" ${proj.category === 'creative' ? 'selected' : ''}>Desain & Kreatif</option>
+                            <option value="academic" ${proj.category === 'academic' ? 'selected' : ''}>Sains & Akademik</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Tanggal / Keterangan</label>
+                        <input type="text" id="editProjDate" value="${proj.date}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Badge Status (Misal: Segera Hadir / Upcoming)</label>
+                    <input type="text" id="editProjBadge" value="${proj.badge || ''}" placeholder="Kosongkan jika karya sudah rilis biasa" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">URL Gambar Foto Proyek</label>
+                    <input type="text" id="editProjImg" value="${proj.img || ''}" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Deskripsi Karya</label>
+                    <textarea id="editProjDesc" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">${proj.desc}</textarea>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Alat / Tools</label>
+                    <input type="text" id="editProjTools" value="${proj.tools}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                </div>
+            `;
+
+            document.getElementById('adminEditFormFields').innerHTML = fieldsHtml;
+            document.getElementById('adminEditModal').classList.remove('hidden');
+        }
+
+        function openEditActivityModal(id) {
+            const act = activitiesData.find(a => a.id === id);
+            if (!act) return;
+            editingAdminTarget = { type: 'activity', id: id };
+
+            document.getElementById('adminEditModalIcon').textContent = '🌟';
+            document.getElementById('adminEditModalTitle').textContent = 'Edit Kegiatan / Aktivitas';
+
+            const fieldsHtml = `
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Judul Kegiatan</label>
+                    <input type="text" id="editActTitle" value="${act.title.replace(/"/g, '&quot;')}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Ikon Emoji</label>
+                        <input type="text" id="editActIcon" value="${act.icon}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Tanggal</label>
+                        <input type="text" id="editActDate" value="${act.date}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">URL Gambar Dokumentasi</label>
+                    <input type="text" id="editActImg" value="${act.img || ''}" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Deskripsi Kegiatan</label>
+                    <textarea id="editActDesc" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">${act.desc}</textarea>
+                </div>
+            `;
+
+            document.getElementById('adminEditFormFields').innerHTML = fieldsHtml;
+            document.getElementById('adminEditModal').classList.remove('hidden');
+        }
+
+        function openEditSkillModal(id) {
+            const skill = skillsData.find(s => s.id === id);
+            if (!skill) return;
+            editingAdminTarget = { type: 'skill', id: id };
+
+            document.getElementById('adminEditModalIcon').textContent = '⚡';
+            document.getElementById('adminEditModalTitle').textContent = 'Edit Keahlian';
+
+            const fieldsHtml = `
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">Nama Keahlian</label>
+                    <input type="text" id="editSkillName" value="${skill.name.replace(/"/g, '&quot;')}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Emoji</label>
+                        <input type="text" id="editSkillIcon" value="${skill.icon}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Kategori</label>
+                        <input type="text" id="editSkillCategory" value="${skill.category}" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">Tingkat</label>
+                        <select id="editSkillLevel" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white outline-none focus:border-sky-500">
+                            <option value="Mahir" ${skill.level === 'Mahir' ? 'selected' : ''}>Mahir</option>
+                            <option value="Menengah" ${skill.level === 'Menengah' ? 'selected' : ''}>Menengah</option>
+                            <option value="Dasar" ${skill.level === 'Dasar' ? 'selected' : ''}>Dasar</option>
+                            <option value="Aktif" ${skill.level === 'Aktif' ? 'selected' : ''}>Aktif</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('adminEditFormFields').innerHTML = fieldsHtml;
+            document.getElementById('adminEditModal').classList.remove('hidden');
+        }
+
+        function closeAdminEditModal() {
+            document.getElementById('adminEditModal').classList.add('hidden');
+            editingAdminTarget = { type: null, id: null };
+        }
+
+        function handleSaveAdminEdit(e) {
+            e.preventDefault();
+            const { type, id } = editingAdminTarget;
+
+            if (type === 'project') {
+                const index = projectsData.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    const category = document.getElementById('editProjCategory').value;
+                    const categoryLabels = {
+                        cooking: 'Kuliner',
+                        tech: 'Teknologi',
+                        creative: 'Desain',
+                        academic: 'Sains'
+                    };
+
+                    projectsData[index] = {
+                        ...projectsData[index],
+                        title: document.getElementById('editProjTitle').value,
+                        category: category,
+                        categoryLabel: categoryLabels[category] || 'Umum',
+                        date: document.getElementById('editProjDate').value,
+                        badge: document.getElementById('editProjBadge').value.trim() || null,
+                        img: document.getElementById('editProjImg').value,
+                        desc: document.getElementById('editProjDesc').value,
+                        tools: document.getElementById('editProjTools').value
+                    };
+
+                    localStorage.setItem('kellyProjectsData_v2', JSON.stringify(projectsData));
+                    renderProjects();
+                    renderAdminProjectsList();
+                    showToast('✏️ Data Proyek berhasil diperbarui!');
+                }
+            } else if (type === 'activity') {
+                const index = activitiesData.findIndex(a => a.id === id);
+                if (index !== -1) {
+                    activitiesData[index] = {
+                        ...activitiesData[index],
+                        title: document.getElementById('editActTitle').value,
+                        icon: document.getElementById('editActIcon').value,
+                        date: document.getElementById('editActDate').value,
+                        img: document.getElementById('editActImg').value,
+                        desc: document.getElementById('editActDesc').value
+                    };
+
+                    localStorage.setItem('kellyActivitiesData', JSON.stringify(activitiesData));
+                    renderActivities();
+                    renderAdminActivitiesList();
+                    showToast('✏️ Data Kegiatan berhasil diperbarui!');
+                }
+            } else if (type === 'skill') {
+                const index = skillsData.findIndex(s => s.id === id);
+                if (index !== -1) {
+                    skillsData[index] = {
+                        ...skillsData[index],
+                        name: document.getElementById('editSkillName').value,
+                        icon: document.getElementById('editSkillIcon').value,
+                        category: document.getElementById('editSkillCategory').value,
+                        level: document.getElementById('editSkillLevel').value
+                    };
+
+                    localStorage.setItem('kellySkillsData', JSON.stringify(skillsData));
+                    renderSkills();
+                    renderAdminSkillsList();
+                    showToast('✏️ Data Keahlian berhasil diperbarui!');
+                }
+            }
+
+            closeAdminEditModal();
+        }
+
+        function handleAddNewSkill(e) {
+            e.preventDefault();
+            const name = document.getElementById('newSkillName').value;
+            const icon = document.getElementById('newSkillIcon').value;
+            const category = document.getElementById('newSkillCategory').value;
+            const level = document.getElementById('newSkillLevel').value;
+
+            const newSkill = {
+                id: Date.now(),
+                name,
+                icon,
+                category,
+                level
+            };
+
+            skillsData.push(newSkill);
+            localStorage.setItem('kellySkillsData', JSON.stringify(skillsData));
+            renderSkills();
+            renderAdminSkillsList();
+            showToast('⚡ Keahlian baru ditambahkan!');
+            e.target.reset();
+        }
+
+        function deleteSkill(id) {
+            skillsData = skillsData.filter(s => s.id !== id);
+            localStorage.setItem('kellySkillsData', JSON.stringify(skillsData));
+            renderSkills();
+            renderAdminSkillsList();
+            showToast('🗑️ Keahlian berhasil dihapus!');
+        }
+
+        // Send Contact Form
+        function handleSendContactMessage(e) {
+            e.preventDefault();
+            const senderName = document.getElementById('contactSenderName').value;
+            
+            const alertBox = document.getElementById('contactSuccessAlert');
+            document.getElementById('contactSuccessText').textContent = `Terima kasih ${senderName}, pesan Anda berhasil dikirim! ✨`;
+            alertBox.classList.remove('hidden');
+
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            }
+
+            e.target.reset();
+            showToast('🚀 Pesan berhasil dikirim!');
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Initial Theme
+        function checkTheme() {
+            const savedTheme = localStorage.getItem('portfolioTheme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').textContent = '🌙';
+                document.getElementById('themeText').textContent = 'Malam';
+            }
+        }
+
+        window.onload = function() {
+            checkTheme();
+            resizeCanvas();
+            animateCanvas();
+            renderHeroProfile();
+            renderEducation();
+            renderSkills();
+            renderActivities();
+            renderProjectFilters();
+            renderProjects();
+            renderSocials();
+
+            window.addEventListener('resize', resizeCanvas);
+        };
+    </script>
+</body>
+</html>
