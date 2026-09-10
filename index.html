@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kelly Madeline Utomo — Portofolio Digital</title>
     
-    <!-- Tailwind & Konfigurasi -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,32 +18,22 @@
         }
     </script>
     
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     
     <style>
-        /* ===== CUSTOM CURSOR ===== */
         body { 
             font-family: 'Inter', sans-serif; 
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='22' x='2' font-size='20'>☀️</text></svg>") 14 14, auto;
         }
-
         html.dark body { 
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='22' x='2' font-size='20'>🌙</text></svg>") 14 14, auto;
         }
+        button, a, select, [role="button"], input[type="submit"], .btn, .tab-btn, .item-list .btn { cursor: pointer !important; }
+        input[type="text"], input[type="email"], input[type="password"], textarea { cursor: text !important; }
 
-        button, a, select, [role="button"], input[type="submit"], .btn, .tab-btn, .item-list .btn {
-            cursor: pointer !important;
-        }
-
-        input[type="text"], input[type="email"], input[type="password"], textarea {
-            cursor: text !important;
-        }
-
-        /* ===== Gaya Global ===== */
         ::-webkit-scrollbar { width: 8px; height: 6px; }
         ::-webkit-scrollbar-track { background: rgba(241,245,249,0.5); }
         .dark ::-webkit-scrollbar-track { background: rgba(15,23,42,0.5); }
@@ -53,68 +42,30 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* ===== Canvas Awan ===== */
         #interactiveSkyCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 0;
         }
 
-        /* ===== PERBAIKAN: Pendidikan di mode gelap ===== */
-        #educationGrid .edu-card {
-            transition: background 0.3s, border-color 0.3s;
-        }
-        #educationGrid .edu-card h4 {
-            color: #0f172a !important;
-        }
-        #educationGrid .edu-card p {
-            color: #475569 !important;
-        }
-        #educationGrid .edu-card .status-badge {
-            color: #1d4ed8 !important;
-        }
-        
-        .dark #educationGrid .edu-card {
-            background: #1e293b !important;
-            border-color: #475569 !important;
-        }
-        .dark #educationGrid .edu-card h4 {
-            color: #f1f5f9 !important;
-        }
-        .dark #educationGrid .edu-card p {
-            color: #cbd5e1 !important;
-        }
-        .dark #educationGrid .edu-card .status-badge {
-            background: #1e3a5f !important;
-            color: #60a5fa !important;
-        }
+        /* Perbaikan mode gelap */
+        #educationGrid .edu-card h4 { color: #0f172a !important; }
+        #educationGrid .edu-card p { color: #475569 !important; }
+        .dark #educationGrid .edu-card { background: #1e293b !important; border-color: #475569 !important; }
+        .dark #educationGrid .edu-card h4 { color: #f1f5f9 !important; }
+        .dark #educationGrid .edu-card p { color: #cbd5e1 !important; }
+        .dark #educationGrid .edu-card .status-badge { background: #1e3a5f !important; color: #60a5fa !important; }
 
-        /* ===== PERBAIKAN: Skills di mode gelap ===== */
-        #skillsGrid .skill-item {
-            transition: background 0.3s, border-color 0.3s;
-        }
-        #skillsGrid .skill-item .skill-name {
-            color: #0f172a !important;
-        }
-        #skillsGrid .skill-item .skill-meta {
-            color: #64748b !important;
-        }
-        .dark #skillsGrid .skill-item {
-            background: #1e293b !important;
-            border-color: #475569 !important;
-        }
-        .dark #skillsGrid .skill-item .skill-name {
-            color: #f1f5f9 !important;
-        }
-        .dark #skillsGrid .skill-item .skill-meta {
-            color: #94a3b8 !important;
-        }
+        #skillsGrid .skill-item .skill-name { color: #0f172a !important; }
+        #skillsGrid .skill-item .skill-meta { color: #64748b !important; }
+        .dark #skillsGrid .skill-item { background: #1e293b !important; border-color: #475569 !important; }
+        .dark #skillsGrid .skill-item .skill-name { color: #f1f5f9 !important; }
+        .dark #skillsGrid .skill-item .skill-meta { color: #94a3b8 !important; }
 
-        /* ===== Modal Admin ===== */
+        .dark #projectsGrid .project-card h4, .dark #activitiesGrid .activity-card h4 { color: #f1f5f9 !important; }
+        .dark #projectsGrid .project-card p, .dark #activitiesGrid .activity-card p { color: #cbd5e1 !important; }
+
+        /* Modal Admin */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(4px);
             display: none; align-items: center; justify-content: center; z-index: 9999;
@@ -131,26 +82,18 @@
         .dark .modal-box .subtitle { color: #94a3b8; }
         .modal-box .field-group label { font-weight: 600; font-size: 14px; color: #1e293b; display: block; margin-bottom: 4px; }
         .dark .modal-box .field-group label { color: #cbd5e1; }
-        .modal-box .field-group input,
-        .modal-box .field-group select,
-        .modal-box .field-group textarea {
+        .modal-box .field-group input, .modal-box .field-group select, .modal-box .field-group textarea {
             width: 100%; padding: 10px 14px; border: 1px solid #d1d9e6; border-radius: 14px;
             font-size: 14px; background: #fafcff; transition: 0.2s;
         }
-        .dark .modal-box .field-group input,
-        .dark .modal-box .field-group select,
-        .dark .modal-box .field-group textarea {
+        .dark .modal-box .field-group input, .dark .modal-box .field-group select, .dark .modal-box .field-group textarea {
             background: #0f172a; border-color: #334155; color: #f1f5f9;
         }
-        .modal-box .field-group input:focus,
-        .modal-box .field-group select:focus,
-        .modal-box .field-group textarea:focus {
+        .modal-box .field-group input:focus, .modal-box .field-group select:focus, .modal-box .field-group textarea:focus {
             border-color: #0ea5e9; outline: none; box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
         }
         .modal-box .field-group textarea { min-height: 70px; resize: vertical; }
-        .modal-actions {
-            display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap;
-        }
+        .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
         .modal-actions .btn { padding: 10px 28px; font-size: 15px; border-radius: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s; }
         .btn-cancel { background: transparent; border: 1px solid #d1d9e6; color: #1e293b; }
         .dark .btn-cancel { border-color: #475569; color: #cbd5e1; }
@@ -159,18 +102,11 @@
         .btn-save { background: #0ea5e9; color: white; }
         .btn-save:hover { background: #0284c7; }
         .modal-box .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        @media (max-width: 640px) {
-            .modal-box { padding: 24px; }
-            .modal-box .form-grid-2 { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 640px) { .modal-box { padding: 24px; } .modal-box .form-grid-2 { grid-template-columns: 1fr; } }
         .inline-select-group { display: flex; gap: 8px; align-items: center; }
         .inline-select-group select { flex: 1; min-width: 0; }
-        .edu-preview-img {
-            width: 50px; height: 50px; object-fit: cover; border-radius: 10px;
-            border: 2px solid #e9edf2; vertical-align: middle; margin-right: 10px;
-        }
+        .edu-preview-img { width: 50px; height: 50px; object-fit: cover; border-radius: 10px; border: 2px solid #e9edf2; vertical-align: middle; margin-right: 10px; }
 
-        /* ===== Toast ===== */
         .toast {
             position: fixed; top: 24px; right: 24px; background: #22c55e; color: white;
             padding: 14px 24px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
@@ -178,7 +114,6 @@
         }
         .toast.error { background: #ef4444; }
 
-        /* ===== Admin Panel ===== */
         .admin-panel-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
             display: none; align-items: flex-start; justify-content: center; z-index: 9998;
@@ -190,11 +125,7 @@
             margin: 20px auto; padding: 24px; max-height: 90vh; overflow-y: auto;
         }
         .dark .admin-panel-box { background: #0f172a; color: #e2e8f0; }
-        .admin-panel-box .section-card {
-            background: white; border-radius: 28px; padding: 28px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.05); margin-bottom: 32px;
-            border: 1px solid #e9edf2;
-        }
+        .admin-panel-box .section-card { background: white; border-radius: 28px; padding: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); margin-bottom: 32px; border: 1px solid #e9edf2; }
         .dark .admin-panel-box .section-card { background: #1e293b; border-color: #334155; }
         .admin-panel-box .section-title { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
         .dark .admin-panel-box .section-title { color: #f1f5f9; }
@@ -203,27 +134,18 @@
         .admin-panel-box .field-group { margin-bottom: 16px; }
         .admin-panel-box .field-group label { display: block; font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 4px; }
         .dark .admin-panel-box .field-group label { color: #cbd5e1; }
-        .admin-panel-box .field-group input,
-        .admin-panel-box .field-group textarea,
-        .admin-panel-box .field-group select {
+        .admin-panel-box .field-group input, .admin-panel-box .field-group textarea, .admin-panel-box .field-group select {
             width: 100%; padding: 10px 14px; border: 1px solid #d1d9e6; border-radius: 14px;
             font-size: 14px; background: #fafcff; transition: 0.2s;
         }
-        .dark .admin-panel-box .field-group input,
-        .dark .admin-panel-box .field-group textarea,
-        .dark .admin-panel-box .field-group select {
+        .dark .admin-panel-box .field-group input, .dark .admin-panel-box .field-group textarea, .dark .admin-panel-box .field-group select {
             background: #0f172a; border-color: #334155; color: #f1f5f9;
         }
-        .admin-panel-box .field-group input:focus,
-        .admin-panel-box .field-group textarea:focus,
-        .admin-panel-box .field-group select:focus {
+        .admin-panel-box .field-group input:focus, .admin-panel-box .field-group textarea:focus, .admin-panel-box .field-group select:focus {
             border-color: #0ea5e9; outline: none; box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
         }
         .admin-panel-box .field-group textarea { min-height: 80px; resize: vertical; }
-        .admin-panel-box .btn {
-            padding: 10px 24px; border-radius: 14px; font-weight: 600; border: none;
-            cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
-        }
+        .admin-panel-box .btn { padding: 10px 24px; border-radius: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .admin-panel-box .btn-primary { background: #0ea5e9; color: white; }
         .admin-panel-box .btn-primary:hover { background: #0284c7; transform: translateY(-1px); }
         .admin-panel-box .btn-success { background: #22c55e; color: white; }
@@ -238,20 +160,13 @@
         .admin-panel-box .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @media (max-width: 640px) { .admin-panel-box .grid-2 { grid-template-columns: 1fr; } }
         .admin-panel-box .flex-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-        .admin-panel-box .item-list {
-            background: #f8fafc; padding: 14px 18px; border-radius: 14px;
-            border: 1px solid #e9edf2; margin-bottom: 10px;
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-        }
+        .admin-panel-box .item-list { background: #f8fafc; padding: 14px 18px; border-radius: 14px; border: 1px solid #e9edf2; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .dark .admin-panel-box .item-list { background: #0f172a; border-color: #334155; }
         .admin-panel-box .item-list .info { flex: 1; }
         .admin-panel-box .item-list .info .title { font-weight: 600; font-size: 15px; }
         .admin-panel-box .item-list .info .sub { font-size: 13px; color: #64748b; }
         .dark .admin-panel-box .item-list .info .sub { color: #94a3b8; }
-        .admin-panel-box .badge-status {
-            font-size: 11px; padding: 2px 12px; border-radius: 20px; font-weight: 600;
-            background: #dbeafe; color: #1d4ed8;
-        }
+        .admin-panel-box .badge-status { font-size: 11px; padding: 2px 12px; border-radius: 20px; font-weight: 600; background: #dbeafe; color: #1d4ed8; }
         .admin-panel-box .badge-status.upcoming { background: #fef3c7; color: #b45309; }
         .admin-panel-box .badge-status.soon { background: #fce4ec; color: #c62828; }
         .admin-panel-box .badge-status.baru { background: #d1fae5; color: #065f46; }
@@ -259,94 +174,49 @@
         .admin-panel-box .badge-status.berjalan { background: #dbeafe; color: #1d4ed8; }
         .admin-panel-box .badge-status.ditolak { background: #fce4ec; color: #c62828; }
         .admin-panel-box .badge-status.tunda { background: #fef3c7; color: #b45309; }
-        .admin-panel-box .badge-level {
-            font-size: 11px; padding: 2px 12px; border-radius: 20px; font-weight: 600;
-            background: #dbeafe; color: #1d4ed8;
-        }
+        .admin-panel-box .badge-level { font-size: 11px; padding: 2px 12px; border-radius: 20px; font-weight: 600; background: #dbeafe; color: #1d4ed8; }
         .admin-panel-box .badge-level.mahir { background: #d1fae5; color: #065f46; }
         .admin-panel-box .badge-level.menengah { background: #fef3c7; color: #b45309; }
         .admin-panel-box .badge-level.aktif { background: #fce4ec; color: #c62828; }
         .admin-panel-box .badge-level.pemula { background: #e9edf2; color: #64748b; }
         .admin-panel-box .empty-state { color: #94a3b8; text-align: center; padding: 30px 0; font-style: italic; }
-        .admin-panel-box .stat-box {
-            background: white; border-radius: 20px; padding: 16px 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: center; flex: 1; min-width: 120px;
-            border: 1px solid #e9edf2;
-        }
+        .admin-panel-box .stat-box { background: white; border-radius: 20px; padding: 16px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: center; flex: 1; min-width: 120px; border: 1px solid #e9edf2; }
         .dark .admin-panel-box .stat-box { background: #1e293b; border-color: #334155; }
         .admin-panel-box .stat-box .number { font-size: 28px; font-weight: 800; color: #0f172a; }
         .dark .admin-panel-box .stat-box .number { color: #f1f5f9; }
         .admin-panel-box .stat-box .label { font-size: 13px; color: #64748b; }
         .dark .admin-panel-box .stat-box .label { color: #94a3b8; }
         .admin-panel-box .stat-container { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
-        .admin-panel-box .tab-nav {
-            display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px;
-            border-bottom: 2px solid #e9edf2; padding-bottom: 12px;
-        }
+        .admin-panel-box .tab-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; border-bottom: 2px solid #e9edf2; padding-bottom: 12px; }
         .dark .admin-panel-box .tab-nav { border-bottom-color: #334155; }
-        .admin-panel-box .tab-btn {
-            padding: 8px 20px; border-radius: 30px; font-weight: 600; font-size: 14px;
-            border: none; cursor: pointer; background: transparent; color: #64748b;
-            transition: 0.2s;
-        }
+        .admin-panel-box .tab-btn { padding: 8px 20px; border-radius: 30px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; background: transparent; color: #64748b; transition: 0.2s; }
         .dark .admin-panel-box .tab-btn { color: #94a3b8; }
         .admin-panel-box .tab-btn.active { background: #0ea5e9; color: white; }
         .admin-panel-box .tab-btn:hover:not(.active) { background: #e9edf2; }
         .dark .admin-panel-box .tab-btn:hover:not(.active) { background: #334155; }
         .admin-panel-box .tab-content { display: none; }
         .admin-panel-box .tab-content.active { display: block; }
-        .admin-panel-box .sosmed-grid {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
-        }
+        .admin-panel-box .sosmed-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
         @media (max-width: 640px) { .admin-panel-box .sosmed-grid { grid-template-columns: 1fr; } }
-        .admin-panel-box .sosmed-item {
-            background: #f8fafc; padding: 12px 16px; border-radius: 16px; border: 1px solid #e9edf2;
-        }
+        .admin-panel-box .sosmed-item { background: #f8fafc; padding: 12px 16px; border-radius: 16px; border: 1px solid #e9edf2; }
         .dark .admin-panel-box .sosmed-item { background: #0f172a; border-color: #334155; }
-        .admin-panel-box .sosmed-item label {
-            display: flex; align-items: center; gap: 8px;
-            font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 4px;
-        }
+        .admin-panel-box .sosmed-item label { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 4px; }
         .dark .admin-panel-box .sosmed-item label { color: #cbd5e1; }
-        .admin-panel-box .sosmed-item input {
-            width: 100%; padding: 8px 12px; border: 1px solid #d1d9e6; border-radius: 10px;
-            font-size: 13px; background: white;
-        }
+        .admin-panel-box .sosmed-item input { width: 100%; padding: 8px 12px; border: 1px solid #d1d9e6; border-radius: 10px; font-size: 13px; background: white; }
         .dark .admin-panel-box .sosmed-item input { background: #0f172a; border-color: #334155; color: #f1f5f9; }
 
-        .admin-header {
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-            gap: 12px; margin-bottom: 28px;
-        }
-        .admin-header h1 { font-size: 30px; font-weight: 900; color: #0f172a; }
-        .dark .admin-header h1 { color: #f1f5f9; }
-
-        /* ===== Login ===== */
-        .login-overlay {
-            position: fixed; inset: 0; background: rgba(15,23,42,0.7); backdrop-filter: blur(8px);
-            display: none; align-items: center; justify-content: center; z-index: 99999;
-        }
+        .login-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 99999; }
         .login-overlay.visible { display: flex; }
-        .login-box {
-            background: white; border-radius: 32px; padding: 40px; max-width: 400px; width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
+        .login-box { background: white; border-radius: 32px; padding: 40px; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
         .dark .login-box { background: #1e293b; color: #e2e8f0; }
         .login-box h2 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
         .login-box p { color: #64748b; margin-bottom: 24px; }
         .dark .login-box p { color: #94a3b8; }
-        .login-box input {
-            width: 100%; padding: 12px 16px; border: 1px solid #d1d9e6; border-radius: 12px;
-            margin-bottom: 16px; font-size: 16px;
-        }
+        .login-box input { width: 100%; padding: 12px 16px; border: 1px solid #d1d9e6; border-radius: 12px; margin-bottom: 16px; font-size: 16px; }
         .dark .login-box input { background: #0f172a; border-color: #334155; color: #f1f5f9; }
         .login-box .error { color: #ef4444; font-size: 14px; display: none; margin-bottom: 12px; }
 
-        /* ===== Message ===== */
-        .message-item {
-            background: #f8fafc; padding: 14px 18px; border-radius: 14px;
-            border: 1px solid #e9edf2; margin-bottom: 10px;
-        }
+        .message-item { background: #f8fafc; padding: 14px 18px; border-radius: 14px; border: 1px solid #e9edf2; margin-bottom: 10px; }
         .dark .message-item { background: #0f172a; border-color: #334155; }
         .message-item .msg-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
         .message-item .msg-sender { font-weight: 700; font-size: 15px; }
@@ -357,29 +227,11 @@
         .message-item .msg-actions { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
         .message-item .badge-unread { background: #ef4444; color: white; font-size: 10px; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
         .message-item .badge-read { background: #22c55e; color: white; font-size: 10px; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
-
-        /* ===== PERBAIKAN: Project & Activity di mode gelap ===== */
-        .dark #projectsGrid .project-card,
-        .dark #activitiesGrid .activity-card {
-            background: #1e293b !important;
-            border-color: #475569 !important;
-        }
-        .dark #projectsGrid .project-card h4,
-        .dark #activitiesGrid .activity-card h4 {
-            color: #f1f5f9 !important;
-        }
-        .dark #projectsGrid .project-card p,
-        .dark #activitiesGrid .activity-card p {
-            color: #cbd5e1 !important;
-        }
     </style>
 </head>
 <body class="bg-gradient-to-b from-sky-400 via-sky-200 to-sky-100 dark:from-slate-950 dark:via-slate-900 dark:to-sky-950 transition-colors duration-500 min-h-screen flex flex-col relative overflow-x-hidden">
 
-    <!-- ===== CANVAS AWAN ===== -->
     <canvas id="interactiveSkyCanvas"></canvas>
-
-    <!-- Toast -->
     <div id="toast" class="toast">✅ Berhasil!</div>
 
     <!-- Login Overlay -->
@@ -407,7 +259,6 @@
                 </div>
             </div>
 
-            <!-- Statistik -->
             <div class="stat-container">
                 <div class="stat-box"><div class="number" id="statProjects">0</div><div class="label">📂 Proyek</div></div>
                 <div class="stat-box"><div class="number" id="statActivities">0</div><div class="label">🌟 Kegiatan</div></div>
@@ -416,7 +267,6 @@
                 <div class="stat-box"><div class="number" id="statMessages">0</div><div class="label">📩 Pesan</div></div>
             </div>
 
-            <!-- Tab Navigasi -->
             <div class="tab-nav">
                 <button class="tab-btn active" data-tab="tabProfil">👤 Profil</button>
                 <button class="tab-btn" data-tab="tabProjects">📂 Proyek</button>
@@ -426,7 +276,6 @@
                 <button class="tab-btn" data-tab="tabMessages">📩 Pesan</button>
             </div>
 
-            <!-- TAB: Profil -->
             <div id="tabProfil" class="tab-content active">
                 <div class="section-card">
                     <h2 class="section-title">👤 Profil & Biografi</h2>
@@ -451,12 +300,9 @@
                 </div>
             </div>
 
-            <!-- TAB: Proyek -->
             <div id="tabProjects" class="tab-content">
                 <div class="section-card" style="border:2px solid #0ea5e9; background:#f8faff;">
-                    <div class="flex-between">
-                        <div><h2 class="section-title" style="font-size:22px;">📂 Tambah Karya Proyek Baru</h2><p class="section-desc" style="margin-bottom:0;">Isi form di bawah untuk menambahkan proyek baru.</p></div>
-                    </div>
+                    <div class="flex-between"><div><h2 class="section-title" style="font-size:22px;">📂 Tambah Karya Proyek Baru</h2><p class="section-desc" style="margin-bottom:0;">Isi form di bawah untuk menambahkan proyek baru.</p></div></div>
                     <div style="margin-top:20px; background:white; border-radius:20px; padding:24px; border:1px solid #e9edf2;">
                         <div class="grid-2">
                             <div class="field-group"><label>Judul Karya / Proyek <span style="color:#ef4444;">*</span></label><input type="text" id="projectTitle" placeholder="Judul proyek..." /></div>
@@ -473,12 +319,9 @@
                 </div>
             </div>
 
-            <!-- TAB: Kegiatan -->
             <div id="tabActivities" class="tab-content">
                 <div class="section-card" style="border:2px solid #22c55e; background:#f8fff8;">
-                    <div class="flex-between">
-                        <div><h2 class="section-title" style="font-size:22px;">🌟 Tambah Kegiatan / Aktivitas Baru</h2><p class="section-desc" style="margin-bottom:0;">Isi form di bawah untuk menambahkan kegiatan baru.</p></div>
-                    </div>
+                    <div class="flex-between"><div><h2 class="section-title" style="font-size:22px;">🌟 Tambah Kegiatan / Aktivitas Baru</h2><p class="section-desc" style="margin-bottom:0;">Isi form di bawah untuk menambahkan kegiatan baru.</p></div></div>
                     <div style="margin-top:20px; background:white; border-radius:20px; padding:24px; border:1px solid #e9edf2;">
                         <div class="grid-2">
                             <div class="field-group"><label>Nama / Judul Kegiatan <span style="color:#ef4444;">*</span></label><input type="text" id="activityTitle" placeholder="Judul kegiatan..." /></div>
@@ -493,12 +336,9 @@
                 </div>
             </div>
 
-            <!-- TAB: Keahlian -->
             <div id="tabSkills" class="tab-content">
                 <div class="section-card" style="border:2px solid #f59e0b; background:#fffbeb;">
-                    <div class="flex-between">
-                        <div><h2 class="section-title" style="font-size:22px;">⚡ Tambah Keahlian & Minat</h2><p class="section-desc" style="margin-bottom:0;">Tambahkan keahlian dengan kategori dan tingkat kemahiran.</p></div>
-                    </div>
+                    <div class="flex-between"><div><h2 class="section-title" style="font-size:22px;">⚡ Tambah Keahlian & Minat</h2><p class="section-desc" style="margin-bottom:0;">Tambahkan keahlian dengan kategori dan tingkat kemahiran.</p></div></div>
                     <div style="margin-top:20px; background:white; border-radius:20px; padding:24px; border:1px solid #e9edf2;">
                         <div class="grid-2">
                             <div class="field-group"><label>Nama Keahlian <span style="color:#ef4444;">*</span></label><input type="text" id="skillName" placeholder="Seni Memasak, Coding, dll." /></div>
@@ -512,12 +352,9 @@
                 </div>
             </div>
 
-            <!-- TAB: Pendidikan -->
             <div id="tabEducation" class="tab-content">
                 <div class="section-card" style="border:2px solid #8b5cf6; background:#f5f3ff;">
-                    <div class="flex-between">
-                        <div><h2 class="section-title" style="font-size:22px;">🎓 Tambah Riwayat Pendidikan</h2><p class="section-desc" style="margin-bottom:0;">Tambahkan riwayat pendidikan dengan pilihan tahun dan status.</p></div>
-                    </div>
+                    <div class="flex-between"><div><h2 class="section-title" style="font-size:22px;">🎓 Tambah Riwayat Pendidikan</h2><p class="section-desc" style="margin-bottom:0;">Tambahkan riwayat pendidikan dengan pilihan tahun dan status.</p></div></div>
                     <div style="margin-top:20px; background:white; border-radius:20px; padding:24px; border:1px solid #e9edf2;">
                         <div class="grid-2">
                             <div class="field-group"><label>Nama Sekolah / Institusi <span style="color:#ef4444;">*</span></label><input type="text" id="eduTitle" placeholder="SMP Mutiara Bangsa 2" /></div>
@@ -533,17 +370,11 @@
                 </div>
             </div>
 
-            <!-- TAB: Pesan Masuk -->
             <div id="tabMessages" class="tab-content">
                 <div class="section-card" style="border:2px solid #8b5cf6; background:#f5f3ff;">
                     <div class="flex-between">
-                        <div>
-                            <h2 class="section-title" style="font-size:22px;">📩 Pesan Masuk</h2>
-                            <p class="section-desc" style="margin-bottom:0;">Semua pesan yang dikirim pengunjung melalui form kontak.</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-outline btn-sm" onclick="clearAllMessages()">🗑️ Kosongkan Semua</button>
-                        </div>
+                        <div><h2 class="section-title" style="font-size:22px;">📩 Pesan Masuk</h2><p class="section-desc" style="margin-bottom:0;">Semua pesan yang dikirim pengunjung melalui form kontak.</p></div>
+                        <div><button class="btn btn-outline btn-sm" onclick="clearAllMessages()">🗑️ Kosongkan Semua</button></div>
                     </div>
                     <div id="messagesList" style="margin-top:16px;"></div>
                 </div>
@@ -557,7 +388,6 @@
     </div>
 
     <!-- ============ MODAL EDIT ============ -->
-    <!-- Modal Edit Proyek -->
     <div id="editProjectModal" class="modal-overlay">
         <div class="modal-box">
             <h2>📂 Edit Proyek</h2><p class="subtitle">Perbarui informasi detail di bawah ini</p>
@@ -576,7 +406,6 @@
         </div>
     </div>
 
-    <!-- Modal Edit Kegiatan -->
     <div id="editActivityModal" class="modal-overlay">
         <div class="modal-box">
             <h2>🌟 Edit Kegiatan / Aktivitas</h2><p class="subtitle">Perbarui informasi detail di bawah ini</p>
@@ -593,7 +422,6 @@
         </div>
     </div>
 
-    <!-- Modal Edit Keahlian -->
     <div id="editSkillModal" class="modal-overlay">
         <div class="modal-box">
             <h2>⚡ Edit Keahlian</h2><p class="subtitle">Perbarui informasi detail di bawah ini</p>
@@ -609,7 +437,6 @@
         </div>
     </div>
 
-    <!-- Modal Edit Pendidikan -->
     <div id="editEduModal" class="modal-overlay">
         <div class="modal-box">
             <h2>🎓 Edit Pendidikan</h2><p class="subtitle">Perbarui informasi detail di bawah ini</p>
@@ -627,22 +454,22 @@
         </div>
     </div>
 
-    <!-- ===================== PORTOFOLIO FRONTEND ===================== -->
-    <!-- Header -->
+    <!-- ===================== PORTOFOLIO ===================== -->
+    <!-- HEADER DENGAN HAMBURGER MENU -->
     <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-sky-200/60 dark:border-slate-800/80 transition-colors shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-auto min-h-[4rem] py-2 flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-3">
-            <div class="flex items-center gap-2.5 w-full md:w-auto justify-between md:justify-start shrink-0">
-                <div class="flex items-center gap-2">
-                    <span class="text-xl sm:text-2xl">☁️</span>
-                    <button id="themeToggleBtn" onclick="toggleDarkMode()" class="px-2.5 py-1.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-amber-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition flex items-center gap-1 text-xs font-bold border border-slate-300/60 dark:border-slate-700/60 shadow-sm shrink-0">
-                        <span id="themeIcon">☀️</span>
-                        <span id="themeText" class="hidden xs:inline text-[11px]">Pagi</span>
-                    </button>
-                    <a href="#beranda" class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white whitespace-nowrap ml-1 shrink-0" id="navBrandName">Kelly Madeline Utomo</a>
-                </div>
-                <button onclick="openAdminModal()" class="md:hidden px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-xs shadow-md flex items-center gap-1 shrink-0">🔐 Admin</button>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
+            <!-- Brand + Theme Toggle -->
+            <div class="flex items-center gap-2 shrink-0">
+                <span class="text-xl sm:text-2xl">☁️</span>
+                <button id="themeToggleBtn" onclick="toggleDarkMode()" class="px-2.5 py-1.5 rounded-full bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-amber-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition flex items-center gap-1 text-xs font-bold border border-slate-300/60 dark:border-slate-700/60 shadow-sm shrink-0">
+                    <span id="themeIcon">☀️</span>
+                    <span id="themeText" class="hidden xs:inline text-[11px]">Pagi</span>
+                </button>
+                <a href="#beranda" class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white whitespace-nowrap ml-1 shrink-0" id="navBrandName">Kelly Madeline Utomo</a>
             </div>
-            <nav class="w-full md:w-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+
+            <!-- Nav Desktop -->
+            <nav class="hidden md:flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
                 <a href="#beranda" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">🏠 Beranda</a>
                 <a href="#about" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">☁️ Tentang</a>
                 <a href="#education" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">🎓 Pendidikan</a>
@@ -651,16 +478,41 @@
                 <a href="#activities" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">🌟 Kegiatan</a>
                 <a href="#contact" class="px-3 py-1.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-xs font-bold whitespace-nowrap shadow-sm">💬 Kontak</a>
             </nav>
+
+            <!-- Admin Button Desktop -->
             <div class="hidden md:flex items-center gap-2 shrink-0">
                 <button onclick="openAdminModal()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold text-xs shadow-md shadow-sky-500/20 hover:shadow-lg transition flex items-center gap-1.5">🔐 Admin Portal</button>
             </div>
+
+            <!-- Hamburger Button -->
+            <button id="hamburgerBtn" onclick="toggleMobileMenu()" class="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition shadow-sm shrink-0" aria-label="Menu">
+                <svg id="hamburgerIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-sky-200/60 dark:border-slate-800/80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
+            <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2">
+                <a href="#beranda" onclick="closeMobileMenu()" class="px-4 py-2.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-sm font-bold shadow-sm flex items-center gap-2">🏠 Beranda</a>
+                <a href="#about" onclick="closeMobileMenu()" class="px-4 py-2.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-sm font-bold shadow-sm flex items-center gap-2">☁️ Tentang</a>
+                <a href="#education" onclick="closeMobileMenu()" class="px-4 py-2.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-sm font-bold shadow-sm flex items-center gap-2">🎓 Pendidikan</a>
+                <a href="#skills" onclick="closeMobileMenu()" class="px-4 py-2.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-sm font-bold shadow-sm flex items-center gap-2">⚡ Keahlian</a>
+                <a href="#projects" onclick="closeMobileMenu()" class="px-4 py-2.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-sm font-bold shadow-sm flex items-center gap-2">📚 Proyek</a>
+                <a href="#activities" onclick="closeMobileMenu()" class="px-4 py-2.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-sm font-bold shadow-sm flex items-center gap-2">🌟 Kegiatan</a>
+                <a href="#contact" onclick="closeMobileMenu()" class="px-4 py-2.5 rounded-xl bg-sky-100/90 dark:bg-slate-800 text-sky-800 dark:text-sky-300 hover:bg-sky-500 hover:text-white transition text-sm font-bold shadow-sm flex items-center gap-2">💬 Kontak</a>
+                <button onclick="closeMobileMenu(); openAdminModal();" class="mt-1 px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2">🔐 Admin Portal</button>
+            </nav>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-16 sm:space-y-24 w-full flex-grow relative z-10">
 
-        <!-- Hero Section -->
         <section id="beranda" class="scroll-mt-24 relative">
             <div class="relative bg-gradient-to-br from-white/80 via-sky-50/70 to-sky-200/60 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-sky-950/60 backdrop-blur-xl border border-white/80 dark:border-slate-800/80 rounded-3xl p-6 sm:p-10 shadow-xl overflow-hidden">
                 <div class="absolute -top-16 -left-16 w-56 h-56 bg-sky-300/40 dark:bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -690,7 +542,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="scroll-mt-24 space-y-6">
             <div class="text-center max-w-xl mx-auto space-y-2">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100/90 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-bold">☁️ Biografi & Profil</div>
@@ -709,7 +560,6 @@
             </div>
         </section>
 
-        <!-- Education Section -->
         <section id="education" class="scroll-mt-24 space-y-6">
             <div class="text-center max-w-xl mx-auto space-y-2">
                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">🎓 Pendidikan & Sekolah</h2>
@@ -718,7 +568,6 @@
             <div id="educationGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto pt-2"></div>
         </section>
 
-        <!-- Skills Section -->
         <section id="skills" class="scroll-mt-24 space-y-6">
             <div class="text-center max-w-xl mx-auto space-y-2">
                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">⚡ Keahlian & Minat</h2>
@@ -727,7 +576,6 @@
             <div id="skillsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects" class="scroll-mt-24 space-y-6">
             <div class="text-center max-w-xl mx-auto space-y-2">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100/90 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-bold">📚 Karya & Tugas Sekolah</div>
@@ -738,7 +586,6 @@
             <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2"></div>
         </section>
 
-        <!-- Activities Section -->
         <section id="activities" class="scroll-mt-24 space-y-6">
             <div class="text-center max-w-xl mx-auto space-y-2">
                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">🌟 Kegiatan & Aktivitas</h2>
@@ -747,7 +594,6 @@
             <div id="activitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
         </section>
 
-        <!-- Contact Form Section -->
         <section id="contact" class="scroll-mt-24 space-y-6">
             <div class="bg-gradient-to-br from-sky-500 to-sky-600 dark:from-slate-900 dark:to-slate-800 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden border border-sky-400 dark:border-slate-700">
                 <div class="max-w-2xl mx-auto space-y-6 text-center relative z-10">
@@ -783,7 +629,6 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="bg-white/80 dark:bg-slate-900/90 border-t border-sky-200 dark:border-slate-800 py-6 text-center text-xs text-slate-600 dark:text-slate-400 relative z-10 backdrop-blur-md">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div class="flex items-center gap-2">
@@ -796,7 +641,6 @@
         </div>
     </footer>
 
-    <!-- Detail Modal -->
     <div id="detailModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm transition-opacity duration-300">
         <div class="bg-white dark:bg-slate-900 border border-sky-300 dark:border-slate-700 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative overflow-hidden space-y-4 max-h-[90vh] overflow-y-auto">
             <button onclick="closeDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg font-bold w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">✕</button>
@@ -816,23 +660,16 @@
         </div>
     </div>
 
-    <!-- ===================== JAVASCRIPT ===================== -->
     <script>
-        // ============================================================
-        // 1. SKRIP AWAN
-        // ============================================================
+        // ===== AWAN BERGERAK =====
         (function() {
             const canvas = document.getElementById('interactiveSkyCanvas');
             const ctx = canvas.getContext('2d');
-            let width, height;
-            let clouds = [];
+            let width, height, clouds = [];
             const NUM_CLOUDS = 25;
             let mouseX = 0, mouseY = 0;
 
-            function resize() {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-            }
+            function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
             window.addEventListener('resize', resize);
             resize();
 
@@ -855,10 +692,7 @@
                 this.update = function() {
                     this.x += this.speed * 0.6 + this.drift;
                     this.y += Math.sin(this.x * 0.002) * 0.05;
-                    if (this.x > width + this.size) {
-                        this.x = -this.size;
-                        this.y = Math.random() * height * 0.7 + 50;
-                    }
+                    if (this.x > width + this.size) { this.x = -this.size; this.y = Math.random() * height * 0.7 + 50; }
                 };
                 this.draw = function(ctx) {
                     ctx.globalAlpha = this.opacity;
@@ -866,9 +700,7 @@
                     const baseX = this.x, baseY = this.y;
                     for (let i = 0; i < this.puffs; i++) {
                         const p = this.puffOffset[i];
-                        const cx = baseX + p.dx + Math.sin(this.x * 0.01 + i) * 6;
-                        const cy = baseY + p.dy + Math.cos(this.x * 0.008 + i * 1.2) * 4;
-                        ctx.arc(cx, cy, p.r, 0, Math.PI * 2);
+                        ctx.arc(baseX + p.dx + Math.sin(this.x * 0.01 + i) * 6, baseY + p.dy + Math.cos(this.x * 0.008 + i * 1.2) * 4, p.r, 0, Math.PI * 2);
                     }
                     ctx.fillStyle = '#ffffff';
                     ctx.fill();
@@ -876,12 +708,7 @@
                 };
             }
 
-            for (let i = 0; i < NUM_CLOUDS; i++) {
-                const c = new Cloud();
-                c.x = Math.random() * width;
-                c.y = Math.random() * height * 0.7 + 50;
-                clouds.push(c);
-            }
+            for (let i = 0; i < NUM_CLOUDS; i++) { const c = new Cloud(); c.x = Math.random() * width; c.y = Math.random() * height * 0.7 + 50; clouds.push(c); }
 
             function drawMouseCloud(x, y) {
                 if (!x || !y) return;
@@ -891,67 +718,63 @@
                 grad.addColorStop(0.5, 'rgba(255,255,255,0.10)');
                 grad.addColorStop(1, 'rgba(255,255,255,0)');
                 ctx.fillStyle = grad;
-                ctx.beginPath();
-                ctx.arc(x, y, radius, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fill();
             }
 
             function animate() {
                 ctx.clearRect(0, 0, width, height);
-                clouds.forEach(c => {
-                    c.update();
-                    c.draw(ctx);
-                });
+                clouds.forEach(c => { c.update(); c.draw(ctx); });
                 drawMouseCloud(mouseX, mouseY);
                 requestAnimationFrame(animate);
             }
 
-            document.addEventListener('mousemove', function(e) {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-
-            document.addEventListener('touchmove', function(e) {
-                const touch = e.touches[0];
-                if (touch) {
-                    mouseX = touch.clientX;
-                    mouseY = touch.clientY;
-                }
-            }, { passive: true });
-
+            document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+            document.addEventListener('touchmove', e => { const t = e.touches[0]; if (t) { mouseX = t.clientX; mouseY = t.clientY; } }, { passive: true });
             animate();
         })();
 
-        // ============================================================
-        // 2. GENERATE TAHUN
-        // ============================================================
-        function generateYearOptions() {
-            const currentYear = 2026;
-            const startYear = 2010;
-            let options = '';
-            for (let y = startYear; y <= currentYear; y++) {
-                options += `<option value="${y}">${y}</option>`;
+        // ===== HAMBURGER MENU =====
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hi = document.getElementById('hamburgerIcon');
+            const ci = document.getElementById('closeIcon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                hi.classList.add('hidden');
+                ci.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                hi.classList.remove('hidden');
+                ci.classList.add('hidden');
             }
-            options += `<option value="Sekarang">Sekarang</option>`;
-            options += `<option value="Masih Berjalan">Masih Berjalan</option>`;
+        }
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hi = document.getElementById('hamburgerIcon');
+            const ci = document.getElementById('closeIcon');
+            menu.classList.add('hidden');
+            hi.classList.remove('hidden');
+            ci.classList.add('hidden');
+        }
+        window.addEventListener('resize', function() { if (window.innerWidth >= 768) closeMobileMenu(); });
+
+        // ===== GENERATE TAHUN =====
+        function generateYearOptions() {
+            let options = '';
+            for (let y = 2010; y <= 2026; y++) options += `<option value="${y}">${y}</option>`;
+            options += `<option value="Sekarang">Sekarang</option><option value="Masih Berjalan">Masih Berjalan</option>`;
             return options;
         }
-
         function generateYearRange(start, end) {
             let options = '';
-            for (let y = start; y <= end; y++) {
-                options += `<option value="${y}">${y}</option>`;
-            }
+            for (let y = start; y <= end; y++) options += `<option value="${y}">${y}</option>`;
             return options;
         }
 
-        // ============================================================
-        // 3. DATA DEFAULT
-        // ============================================================
+        // ===== DATA DEFAULT =====
         const DEFAULT = {
             profile: {
-                name: "Kelly Madeline Utomo",
-                slogan: "Siswi SMP Mutiara Bangsa 2 | Kelas 9",
+                name: "Kelly Madeline Utomo", slogan: "Siswi SMP Mutiara Bangsa 2 | Kelas 9",
                 school: "SMP Mutiara Bangsa 2 Tangerang",
                 avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600",
                 bio: "Halo! Saya Kelly Madeline Utomo, murid kelas 9 di SMP Mutiara Bangsa 2 Tangerang. Memiliki hobi memasak, mencoba resep kuliner baru, dan mengeksplorasi ilmu teknologi digital.",
@@ -977,82 +800,44 @@
                 { name: "Kreativitas Produk", icon: "💡", category: "Kreatif", level: "Mahir" }
             ],
             projects: [{
-                id: 1,
-                title: "Project Database Firebase (Coming Soon P7)",
-                category: "Teknologi",
-                date: "Segera Hadir",
-                status: "Upcoming",
+                id: 1, title: "Project Database Firebase (Coming Soon P7)", category: "Teknologi", date: "Segera Hadir", status: "Upcoming",
                 image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=300&h=200&fit=crop",
-                desc: "Membangun database realtime dengan Firebase untuk aplikasi sekolah.",
-                link: "#"
+                desc: "Membangun database realtime dengan Firebase untuk aplikasi sekolah.", link: "#"
             }, {
-                id: 2,
-                title: "Portofolio Web Interaktif Murid",
-                category: "Teknologi",
-                date: "Februari 2026",
-                status: "Baru",
+                id: 2, title: "Portofolio Web Interaktif Murid", category: "Teknologi", date: "Februari 2026", status: "Baru",
                 image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=300&h=200&fit=crop",
-                desc: "Website portofolio interaktif menggunakan HTML, CSS, dan JavaScript.",
-                link: "#"
+                desc: "Website portofolio interaktif menggunakan HTML, CSS, dan JavaScript.", link: "#"
             }, {
-                id: 3,
-                title: "E-Book Resep Dessert Manis Kebanggaan",
-                category: "Kuliner & Baking",
-                date: "Januari 2026",
-                status: "Segera Hadir",
+                id: 3, title: "E-Book Resep Dessert Manis Kebanggaan", category: "Kuliner & Baking", date: "Januari 2026", status: "Segera Hadir",
                 image: "https://images.unsplash.com/photo-1556911261-6bd341186b2f?w=300&h=200&fit=crop",
-                desc: "Kumpulan resep dessert manis favorit keluarga dengan foto step-by-step.",
-                link: "#"
+                desc: "Kumpulan resep dessert manis favorit keluarga dengan foto step-by-step.", link: "#"
             }],
             activities: [{
-                id: 1,
-                title: "Workshop Kuliner & Lomba Baking Sekolah",
-                icon: "🍰",
-                date: "Januari 2026",
+                id: 1, title: "Workshop Kuliner & Lomba Baking Sekolah", icon: "🍰", date: "Januari 2026",
                 image: "https://images.unsplash.com/photo-1556911261-6bd341186b2f?w=300&h=200&fit=crop",
                 desc: "Mengikuti workshop memasak dan lomba baking antar kelas. Menang juara 2."
             }, {
-                id: 2,
-                title: "Proyek Komputer & Pemrograman Web",
-                icon: "💻",
-                date: "Desember 2025",
+                id: 2, title: "Proyek Komputer & Pemrograman Web", icon: "💻", date: "Desember 2025",
                 image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=300&h=200&fit=crop",
                 desc: "Membuat website sederhana untuk tugas akhir semester."
             }, {
-                id: 3,
-                title: "Eksperimen Laboratorium IPA",
-                icon: "🔬",
-                date: "November 2025",
+                id: 3, title: "Eksperimen Laboratorium IPA", icon: "🔬", date: "November 2025",
                 image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=300&h=200&fit=crop",
                 desc: "Praktikum fotosintesis dengan mengukur gelembung oksigen."
             }],
             messages: []
         };
 
-        // ============================================================
-        // 4. STORAGE
-        // ============================================================
+        // ===== STORAGE =====
         function getData() {
             const raw = localStorage.getItem('portfolioData');
-            if (raw) {
-                try { return JSON.parse(raw); } catch (e) {}
-            }
+            if (raw) { try { return JSON.parse(raw); } catch (e) {} }
             localStorage.setItem('portfolioData', JSON.stringify(DEFAULT));
             return JSON.parse(JSON.stringify(DEFAULT));
         }
+        function setData(data) { localStorage.setItem('portfolioData', JSON.stringify(data)); }
+        function nextId(arr) { if (!arr || arr.length === 0) return 1; return Math.max(...arr.map(x => x.id || 0)) + 1; }
 
-        function setData(data) {
-            localStorage.setItem('portfolioData', JSON.stringify(data));
-        }
-
-        function nextId(arr) {
-            if (!arr || arr.length === 0) return 1;
-            return Math.max(...arr.map(x => x.id || 0)) + 1;
-        }
-
-        // ============================================================
-        // 5. TOAST
-        // ============================================================
         function showToast(msg, isError = false) {
             const el = document.getElementById('toast');
             el.textContent = msg;
@@ -1062,9 +847,7 @@
             el._timer = setTimeout(() => { el.style.display = 'none'; }, 3500);
         }
 
-        // ============================================================
-        // 6. DARK MODE
-        // ============================================================
+        // ===== DARK MODE =====
         function toggleDarkMode() {
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
@@ -1072,18 +855,14 @@
             document.getElementById('themeText').textContent = isDark ? 'Malam' : 'Pagi';
             localStorage.setItem('darkMode', isDark ? 'true' : 'false');
         }
-
         if (localStorage.getItem('darkMode') === 'true') {
             document.documentElement.classList.add('dark');
             document.getElementById('themeIcon').textContent = '🌙';
             document.getElementById('themeText').textContent = 'Malam';
         }
 
-        // ============================================================
-        // 7. ADMIN LOGIN
-        // ============================================================
+        // ===== ADMIN LOGIN =====
         let isAdminLoggedIn = false;
-
         function openAdminModal() {
             if (isAdminLoggedIn) {
                 document.getElementById('adminPanelOverlay').classList.add('active');
@@ -1092,10 +871,7 @@
                 document.getElementById('loginOverlay').classList.add('visible');
             }
         }
-
-        function closeAdminPanel() {
-            document.getElementById('adminPanelOverlay').classList.remove('active');
-        }
+        function closeAdminPanel() { document.getElementById('adminPanelOverlay').classList.remove('active'); }
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1123,12 +899,9 @@
             showToast('👋 Logout berhasil');
         }
 
-        // ============================================================
-        // 8. RENDER ADMIN
-        // ============================================================
+        // ===== RENDER ADMIN =====
         function renderAllAdmin() {
             const data = getData();
-
             document.getElementById('statProjects').textContent = data.projects?.length || 0;
             document.getElementById('statActivities').textContent = data.activities?.length || 0;
             document.getElementById('statSkills').textContent = data.skills?.length || 0;
@@ -1142,203 +915,79 @@
             document.getElementById('profileBio').value = data.profile.bio || '';
 
             const social = data.profile.social || [];
-            const getUrl = (icon) => {
-                const found = social.find(s => s.icon === icon);
-                return found ? found.url : '';
-            };
+            const getUrl = (icon) => { const f = social.find(s => s.icon === icon); return f ? f.url : ''; };
             document.getElementById('sosmedInstagram').value = getUrl('fa-brands fa-instagram');
             document.getElementById('sosmedTiktok').value = getUrl('fa-brands fa-tiktok');
             document.getElementById('sosmedYoutube').value = getUrl('fa-brands fa-youtube');
 
-            // Projects
             const prEl = document.getElementById('projectsList');
             if (data.projects?.length) {
                 prEl.innerHTML = data.projects.map((p, i) => {
                     const badge = p.status ? `<span class="badge-status ${p.status.toLowerCase().includes('upcoming')?'upcoming':p.status.toLowerCase().includes('segera')?'soon':p.status.toLowerCase().includes('baru')?'baru':''}">${p.status}</span>` : '';
-                    return `<div class="item-list">
-                            <div class="info">
-                                <div class="title">${p.title}</div>
-                                <div class="sub">${p.category} • ${p.date || 'Tanpa tanggal'} ${badge}</div>
-                            </div>
-                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                                <button class="btn btn-outline btn-sm" onclick="openEditProjectModal(${i})">✏️ Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteProject(${i})">🗑️ Hapus</button>
-                            </div>
-                        </div>`;
+                    return `<div class="item-list"><div class="info"><div class="title">${p.title}</div><div class="sub">${p.category} • ${p.date || 'Tanpa tanggal'} ${badge}</div></div><div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="btn btn-outline btn-sm" onclick="openEditProjectModal(${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="deleteProject(${i})">🗑️ Hapus</button></div></div>`;
                 }).join('');
-            } else {
-                prEl.innerHTML = '<div class="empty-state">Belum ada proyek.</div>';
-            }
+            } else prEl.innerHTML = '<div class="empty-state">Belum ada proyek.</div>';
 
-            // Activities
             const acEl = document.getElementById('activitiesList');
             if (data.activities?.length) {
                 acEl.innerHTML = data.activities.map((a, i) => {
                     const icon = a.icon ? `<span style="font-size:18px;margin-right:6px;">${a.icon}</span>` : '';
-                    return `<div class="item-list">
-                            <div class="info">
-                                <div class="title">${icon}${a.title}</div>
-                                <div class="sub">${a.date || 'Tanpa tanggal'} — ${a.desc ? a.desc.substring(0,60)+(a.desc.length>60?'…':'') : ''}</div>
-                            </div>
-                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                                <button class="btn btn-outline btn-sm" onclick="openEditActivityModal(${i})">✏️ Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteActivity(${i})">🗑️ Hapus</button>
-                            </div>
-                        </div>`;
+                    return `<div class="item-list"><div class="info"><div class="title">${icon}${a.title}</div><div class="sub">${a.date || 'Tanpa tanggal'} — ${a.desc ? a.desc.substring(0,60)+(a.desc.length>60?'…':'') : ''}</div></div><div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="btn btn-outline btn-sm" onclick="openEditActivityModal(${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="deleteActivity(${i})">🗑️ Hapus</button></div></div>`;
                 }).join('');
-            } else {
-                acEl.innerHTML = '<div class="empty-state">Belum ada kegiatan.</div>';
-            }
+            } else acEl.innerHTML = '<div class="empty-state">Belum ada kegiatan.</div>';
 
-            // Skills
             const skEl = document.getElementById('skillsList');
             if (data.skills?.length) {
                 skEl.innerHTML = data.skills.map((s, i) => {
-                    const levelClass = s.level?.toLowerCase() || '';
-                    return `<div class="item-list">
-                            <div class="info">
-                                <div class="title">${s.icon || '⭐'} ${s.name}</div>
-                                <div class="sub">${s.category || 'Umum'} • <span class="badge-level ${levelClass}">${s.level || 'Mahir'}</span></div>
-                            </div>
-                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                                <button class="btn btn-outline btn-sm" onclick="openEditSkillModal(${i})">✏️ Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteSkill(${i})">🗑️ Hapus</button>
-                            </div>
-                        </div>`;
+                    const lc = s.level?.toLowerCase() || '';
+                    return `<div class="item-list"><div class="info"><div class="title">${s.icon || '⭐'} ${s.name}</div><div class="sub">${s.category || 'Umum'} • <span class="badge-level ${lc}">${s.level || 'Mahir'}</span></div></div><div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="btn btn-outline btn-sm" onclick="openEditSkillModal(${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="deleteSkill(${i})">🗑️ Hapus</button></div></div>`;
                 }).join('');
-            } else {
-                skEl.innerHTML = '<div class="empty-state">Belum ada keahlian.</div>';
-            }
+            } else skEl.innerHTML = '<div class="empty-state">Belum ada keahlian.</div>';
 
-            // Education
             const eduEl = document.getElementById('educationList');
             if (data.education?.length) {
                 eduEl.innerHTML = data.education.map((e, i) => {
-                    const statusClass = e.status?.toLowerCase().replace(' ', '') || '';
-                    const imgHtml = e.image ? `<img src="${e.image}" class="edu-preview-img" onerror="this.style.display='none'" />` : '';
-                    return `<div class="item-list">
-                            <div class="info">
-                                <div class="title">${imgHtml}${e.title}</div>
-                                <div class="sub">${e.yearStart || ''} — ${e.yearEnd || ''} • <span class="badge-status ${statusClass}">${e.status || 'Lulus'}</span></div>
-                                <div class="sub" style="font-size:12px; color:#94a3b8;">${e.desc || ''}</div>
-                            </div>
-                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                                <button class="btn btn-outline btn-sm" onclick="openEditEduModal(${i})">✏️ Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteEdu(${i})">🗑️ Hapus</button>
-                            </div>
-                        </div>`;
+                    const sc = e.status?.toLowerCase().replace(' ', '') || '';
+                    const img = e.image ? `<img src="${e.image}" class="edu-preview-img" onerror="this.style.display='none'" />` : '';
+                    return `<div class="item-list"><div class="info"><div class="title">${img}${e.title}</div><div class="sub">${e.yearStart || ''} — ${e.yearEnd || ''} • <span class="badge-status ${sc}">${e.status || 'Lulus'}</span></div><div class="sub" style="font-size:12px; color:#94a3b8;">${e.desc || ''}</div></div><div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="btn btn-outline btn-sm" onclick="openEditEduModal(${i})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="deleteEdu(${i})">🗑️ Hapus</button></div></div>`;
                 }).join('');
-            } else {
-                eduEl.innerHTML = '<div class="empty-state">Belum ada pendidikan.</div>';
-            }
+            } else eduEl.innerHTML = '<div class="empty-state">Belum ada pendidikan.</div>';
 
             renderMessages();
         }
 
-        // ============================================================
-        // 9. RENDER PESAN
-        // ============================================================
+        // ===== RENDER PESAN =====
         function renderMessages() {
             const data = getData();
             const messages = data.messages || [];
             const container = document.getElementById('messagesList');
-
-            if (messages.length === 0) {
-                container.innerHTML = '<div class="empty-state">Belum ada pesan masuk.</div>';
-                return;
-            }
-
+            if (messages.length === 0) { container.innerHTML = '<div class="empty-state">Belum ada pesan masuk.</div>'; return; }
             const sorted = [...messages].reverse();
             container.innerHTML = sorted.map((msg, idx) => {
                 const realIndex = messages.length - 1 - idx;
                 const isRead = msg.read || false;
-                const statusBadge = isRead ? 
-                    '<span class="badge-read">✅ Dibaca</span>' : 
-                    '<span class="badge-unread">📩 Baru</span>';
-                return `
-                    <div class="message-item">
-                        <div class="msg-header">
-                            <span class="msg-sender">${msg.name || 'Tanpa Nama'}</span>
-                            <div class="msg-meta">
-                                ${statusBadge}
-                                <span style="margin-left:8px;">${msg.timestamp || ''}</span>
-                            </div>
-                        </div>
-                        <div class="msg-subject">📌 ${msg.subject || 'Tanpa Subjek'}</div>
-                        <div class="msg-body">${msg.message || ''}</div>
-                        <div class="msg-actions">
-                            ${!isRead ? `<button class="btn btn-outline btn-sm" onclick="markMessageRead(${realIndex})">📩 Tandai Dibaca</button>` : ''}
-                            <button class="btn btn-danger btn-sm" onclick="deleteMessage(${realIndex})">🗑️ Hapus</button>
-                        </div>
-                    </div>
-                `;
+                const sb = isRead ? '<span class="badge-read">✅ Dibaca</span>' : '<span class="badge-unread">📩 Baru</span>';
+                return `<div class="message-item"><div class="msg-header"><span class="msg-sender">${msg.name || 'Tanpa Nama'}</span><div class="msg-meta">${sb}<span style="margin-left:8px;">${msg.timestamp || ''}</span></div></div><div class="msg-subject">📌 ${msg.subject || 'Tanpa Subjek'}</div><div class="msg-body">${msg.message || ''}</div><div class="msg-actions">${!isRead ? `<button class="btn btn-outline btn-sm" onclick="markMessageRead(${realIndex})">📩 Tandai Dibaca</button>` : ''}<button class="btn btn-danger btn-sm" onclick="deleteMessage(${realIndex})">🗑️ Hapus</button></div></div>`;
             }).join('');
         }
 
-        function markMessageRead(index) {
-            const data = getData();
-            if (data.messages && data.messages[index]) {
-                data.messages[index].read = true;
-                setData(data);
-                renderAllAdmin();
-                showToast('✅ Pesan ditandai dibaca');
-            }
-        }
+        function markMessageRead(i) { const d = getData(); if (d.messages && d.messages[i]) { d.messages[i].read = true; setData(d); renderAllAdmin(); showToast('✅ Pesan ditandai dibaca'); } }
+        function deleteMessage(i) { const d = getData(); if (d.messages && d.messages[i]) { d.messages.splice(i, 1); setData(d); renderAllAdmin(); showToast('🗑️ Pesan dihapus'); } }
+        function clearAllMessages() { const d = getData(); d.messages = []; setData(d); renderAllAdmin(); showToast('🗑️ Semua pesan dihapus'); }
 
-        function deleteMessage(index) {
-            const data = getData();
-            if (data.messages && data.messages[index]) {
-                data.messages.splice(index, 1);
-                setData(data);
-                renderAllAdmin();
-                showToast('🗑️ Pesan dihapus');
-            }
-        }
-
-        function clearAllMessages() {
-            const data = getData();
-            data.messages = [];
-            setData(data);
-            renderAllAdmin();
-            showToast('🗑️ Semua pesan dihapus');
-        }
-
-        // ============================================================
-        // 10. ADMIN CRUD: TAMBAH
-        // ============================================================
+        // ===== CRUD TAMBAH =====
         function addProject() {
             const title = document.getElementById('projectTitle').value.trim();
             if (!title) { showToast('⚠️ Judul proyek wajib diisi!', true); return; }
             const month = document.getElementById('projectMonth').value;
             const year = document.getElementById('projectYear').value;
             let date = '';
-            if (month && year) date = `${month} ${year}`;
-            else if (!month && year) date = year;
-            else if (month && !year) date = month;
-            else date = 'Tanpa tanggal';
-
+            if (month && year) date = `${month} ${year}`; else if (!month && year) date = year; else if (month && !year) date = month; else date = 'Tanpa tanggal';
             const data = getData();
-            data.projects.push({
-                id: nextId(data.projects),
-                title,
-                category: document.getElementById('projectCategory').value,
-                date: date,
-                status: document.getElementById('projectStatus').value.trim(),
-                image: document.getElementById('projectImage').value.trim() || 'https://placehold.co/300x200/e2e8f0/64748b?text=No+Image',
-                desc: document.getElementById('projectDesc').value.trim() || 'Tidak ada deskripsi.',
-                link: document.getElementById('projectLink').value.trim() || '#'
-            });
+            data.projects.push({ id: nextId(data.projects), title, category: document.getElementById('projectCategory').value, date, status: document.getElementById('projectStatus').value.trim(), image: document.getElementById('projectImage').value.trim() || 'https://placehold.co/300x200/e2e8f0/64748b?text=No+Image', desc: document.getElementById('projectDesc').value.trim() || 'Tidak ada deskripsi.', link: document.getElementById('projectLink').value.trim() || '#' });
             setData(data);
-            document.getElementById('projectTitle').value = '';
-            document.getElementById('projectMonth').value = '';
-            document.getElementById('projectYear').value = '';
-            document.getElementById('projectStatus').value = '';
-            document.getElementById('projectImage').value = '';
-            document.getElementById('projectDesc').value = '';
-            document.getElementById('projectLink').value = '';
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('✅ Proyek ditambahkan!');
+            ['projectTitle','projectMonth','projectYear','projectStatus','projectImage','projectDesc','projectLink'].forEach(id => document.getElementById(id).value = '');
+            renderAllAdmin(); renderPortfolio(); showToast('✅ Proyek ditambahkan!');
         }
 
         function addActivity() {
@@ -1347,119 +996,45 @@
             const month = document.getElementById('activityMonth').value;
             const year = document.getElementById('activityYear').value;
             let date = '';
-            if (month && year) date = `${month} ${year}`;
-            else if (!month && year) date = year;
-            else if (month && !year) date = month;
-            else date = 'Tanpa tanggal';
-
+            if (month && year) date = `${month} ${year}`; else if (!month && year) date = year; else if (month && !year) date = month; else date = 'Tanpa tanggal';
             const data = getData();
-            data.activities.push({
-                id: nextId(data.activities),
-                title,
-                icon: document.getElementById('activityIcon').value || '📌',
-                date: date,
-                image: document.getElementById('activityImage').value.trim() || 'https://placehold.co/300x200/e2e8f0/64748b?text=No+Image',
-                desc: document.getElementById('activityDesc').value.trim() || 'Tidak ada deskripsi.'
-            });
+            data.activities.push({ id: nextId(data.activities), title, icon: document.getElementById('activityIcon').value || '📌', date, image: document.getElementById('activityImage').value.trim() || 'https://placehold.co/300x200/e2e8f0/64748b?text=No+Image', desc: document.getElementById('activityDesc').value.trim() || 'Tidak ada deskripsi.' });
             setData(data);
-            document.getElementById('activityTitle').value = '';
-            document.getElementById('activityIcon').value = '📌';
-            document.getElementById('activityMonth').value = '';
-            document.getElementById('activityYear').value = '';
-            document.getElementById('activityImage').value = '';
-            document.getElementById('activityDesc').value = '';
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('✅ Kegiatan ditambahkan!');
+            document.getElementById('activityTitle').value = ''; document.getElementById('activityIcon').value = '📌';
+            ['activityMonth','activityYear','activityImage','activityDesc'].forEach(id => document.getElementById(id).value = '');
+            renderAllAdmin(); renderPortfolio(); showToast('✅ Kegiatan ditambahkan!');
         }
 
         function addSkill() {
             const name = document.getElementById('skillName').value.trim();
             if (!name) { showToast('⚠️ Nama keahlian wajib diisi!', true); return; }
             const data = getData();
-            data.skills.push({
-                name: name,
-                icon: document.getElementById('skillIcon').value || '⭐',
-                category: document.getElementById('skillCategory').value,
-                level: document.getElementById('skillLevel').value
-            });
+            data.skills.push({ name, icon: document.getElementById('skillIcon').value || '⭐', category: document.getElementById('skillCategory').value, level: document.getElementById('skillLevel').value });
             setData(data);
-            document.getElementById('skillName').value = '';
-            document.getElementById('skillIcon').value = '⭐';
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('✅ Keahlian ditambahkan!');
+            document.getElementById('skillName').value = ''; document.getElementById('skillIcon').value = '⭐';
+            renderAllAdmin(); renderPortfolio(); showToast('✅ Keahlian ditambahkan!');
         }
 
         function addEducation() {
             const title = document.getElementById('eduTitle').value.trim();
             if (!title) { showToast('⚠️ Nama sekolah wajib diisi!', true); return; }
             const data = getData();
-            data.education.push({
-                id: nextId(data.education),
-                title: title,
-                yearStart: document.getElementById('eduYearStart').value,
-                yearEnd: document.getElementById('eduYearEnd').value,
-                status: document.getElementById('eduStatus').value,
-                image: document.getElementById('eduImage').value.trim() || '',
-                desc: document.getElementById('eduDesc').value.trim() || ''
-            });
+            data.education.push({ id: nextId(data.education), title, yearStart: document.getElementById('eduYearStart').value, yearEnd: document.getElementById('eduYearEnd').value, status: document.getElementById('eduStatus').value, image: document.getElementById('eduImage').value.trim() || '', desc: document.getElementById('eduDesc').value.trim() || '' });
             setData(data);
-            document.getElementById('eduTitle').value = '';
-            document.getElementById('eduImage').value = '';
-            document.getElementById('eduDesc').value = '';
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('✅ Pendidikan ditambahkan!');
+            ['eduTitle','eduImage','eduDesc'].forEach(id => document.getElementById(id).value = '');
+            renderAllAdmin(); renderPortfolio(); showToast('✅ Pendidikan ditambahkan!');
         }
 
-        // ============================================================
-        // 11. ADMIN CRUD: DELETE
-        // ============================================================
-        function deleteProject(i) {
-            const data = getData();
-            data.projects.splice(i, 1);
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('🗑️ Proyek dihapus');
-        }
+        // ===== DELETE =====
+        function deleteProject(i) { const d = getData(); d.projects.splice(i, 1); setData(d); renderAllAdmin(); renderPortfolio(); showToast('🗑️ Proyek dihapus'); }
+        function deleteActivity(i) { const d = getData(); d.activities.splice(i, 1); setData(d); renderAllAdmin(); renderPortfolio(); showToast('🗑️ Kegiatan dihapus'); }
+        function deleteSkill(i) { const d = getData(); d.skills.splice(i, 1); setData(d); renderAllAdmin(); renderPortfolio(); showToast('🗑️ Keahlian dihapus'); }
+        function deleteEdu(i) { const d = getData(); d.education.splice(i, 1); setData(d); renderAllAdmin(); renderPortfolio(); showToast('🗑️ Pendidikan dihapus'); }
 
-        function deleteActivity(i) {
-            const data = getData();
-            data.activities.splice(i, 1);
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('🗑️ Kegiatan dihapus');
-        }
-
-        function deleteSkill(i) {
-            const data = getData();
-            data.skills.splice(i, 1);
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('🗑️ Keahlian dihapus');
-        }
-
-        function deleteEdu(i) {
-            const data = getData();
-            data.education.splice(i, 1);
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('🗑️ Pendidikan dihapus');
-        }
-
-        // ============================================================
-        // 12. ADMIN CRUD: EDIT
-        // ============================================================
+        // ===== EDIT MODALS =====
         let editProjectIndex = null;
         function openEditProjectModal(index) {
-            const data = getData();
-            const p = data.projects[index];
-            if (!p) return;
+            const data = getData(); const p = data.projects[index]; if (!p) return;
             editProjectIndex = index;
             document.getElementById('editProjectTitle').value = p.title || '';
             document.getElementById('editProjectCategory').value = p.category || '';
@@ -1468,52 +1043,33 @@
             if (parts.length === 2 && parts[1] && !isNaN(parts[1])) {
                 document.getElementById('editProjectMonth').value = parts[0] || '';
                 document.getElementById('editProjectYear').value = parts[1] || '';
-            } else {
-                document.getElementById('editProjectMonth').value = '';
-                document.getElementById('editProjectYear').value = '';
-            }
+            } else { document.getElementById('editProjectMonth').value = ''; document.getElementById('editProjectYear').value = ''; }
             document.getElementById('editProjectImage').value = p.image || '';
             document.getElementById('editProjectDesc').value = p.desc || '';
             document.getElementById('editProjectLink').value = p.link || '';
             document.getElementById('editProjectModal').classList.add('active');
         }
-        function closeEditProjectModal() {
-            document.getElementById('editProjectModal').classList.remove('active');
-            editProjectIndex = null;
-        }
+        function closeEditProjectModal() { document.getElementById('editProjectModal').classList.remove('active'); editProjectIndex = null; }
         function saveEditProject() {
             if (editProjectIndex === null) return;
-            const data = getData();
-            const p = data.projects[editProjectIndex];
-            if (!p) return;
+            const data = getData(); const p = data.projects[editProjectIndex]; if (!p) return;
             const title = document.getElementById('editProjectTitle').value.trim();
             if (!title) { showToast('⚠️ Judul proyek wajib diisi!', true); return; }
             const month = document.getElementById('editProjectMonth').value;
             const year = document.getElementById('editProjectYear').value;
             let date = '';
-            if (month && year) date = `${month} ${year}`;
-            else if (!month && year) date = year;
-            else if (month && !year) date = month;
-            else date = 'Tanpa tanggal';
-            p.title = title;
-            p.category = document.getElementById('editProjectCategory').value;
-            p.date = date;
+            if (month && year) date = `${month} ${year}`; else if (!month && year) date = year; else if (month && !year) date = month; else date = 'Tanpa tanggal';
+            p.title = title; p.category = document.getElementById('editProjectCategory').value; p.date = date;
             p.status = document.getElementById('editProjectStatus').value.trim();
             p.image = document.getElementById('editProjectImage').value.trim() || 'https://placehold.co/300x200/e2e8f0/64748b?text=No+Image';
             p.desc = document.getElementById('editProjectDesc').value.trim() || 'Tidak ada deskripsi.';
             p.link = document.getElementById('editProjectLink').value.trim() || '#';
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            closeEditProjectModal();
-            showToast('✅ Proyek diperbarui!');
+            setData(data); renderAllAdmin(); renderPortfolio(); closeEditProjectModal(); showToast('✅ Proyek diperbarui!');
         }
 
         let editActivityIndex = null;
         function openEditActivityModal(index) {
-            const data = getData();
-            const a = data.activities[index];
-            if (!a) return;
+            const data = getData(); const a = data.activities[index]; if (!a) return;
             editActivityIndex = index;
             document.getElementById('editActivityTitle').value = a.title || '';
             document.getElementById('editActivityIcon').value = a.icon || '📌';
@@ -1521,49 +1077,30 @@
             if (parts.length === 2 && parts[1] && !isNaN(parts[1])) {
                 document.getElementById('editActivityMonth').value = parts[0] || '';
                 document.getElementById('editActivityYear').value = parts[1] || '';
-            } else {
-                document.getElementById('editActivityMonth').value = '';
-                document.getElementById('editActivityYear').value = '';
-            }
+            } else { document.getElementById('editActivityMonth').value = ''; document.getElementById('editActivityYear').value = ''; }
             document.getElementById('editActivityImage').value = a.image || '';
             document.getElementById('editActivityDesc').value = a.desc || '';
             document.getElementById('editActivityModal').classList.add('active');
         }
-        function closeEditActivityModal() {
-            document.getElementById('editActivityModal').classList.remove('active');
-            editActivityIndex = null;
-        }
+        function closeEditActivityModal() { document.getElementById('editActivityModal').classList.remove('active'); editActivityIndex = null; }
         function saveEditActivity() {
             if (editActivityIndex === null) return;
-            const data = getData();
-            const a = data.activities[editActivityIndex];
-            if (!a) return;
+            const data = getData(); const a = data.activities[editActivityIndex]; if (!a) return;
             const title = document.getElementById('editActivityTitle').value.trim();
             if (!title) { showToast('⚠️ Judul kegiatan wajib diisi!', true); return; }
             const month = document.getElementById('editActivityMonth').value;
             const year = document.getElementById('editActivityYear').value;
             let date = '';
-            if (month && year) date = `${month} ${year}`;
-            else if (!month && year) date = year;
-            else if (month && !year) date = month;
-            else date = 'Tanpa tanggal';
-            a.title = title;
-            a.icon = document.getElementById('editActivityIcon').value || '📌';
-            a.date = date;
+            if (month && year) date = `${month} ${year}`; else if (!month && year) date = year; else if (month && !year) date = month; else date = 'Tanpa tanggal';
+            a.title = title; a.icon = document.getElementById('editActivityIcon').value || '📌'; a.date = date;
             a.image = document.getElementById('editActivityImage').value.trim() || 'https://placehold.co/300x200/e2e8f0/64748b?text=No+Image';
             a.desc = document.getElementById('editActivityDesc').value.trim() || 'Tidak ada deskripsi.';
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            closeEditActivityModal();
-            showToast('✅ Kegiatan diperbarui!');
+            setData(data); renderAllAdmin(); renderPortfolio(); closeEditActivityModal(); showToast('✅ Kegiatan diperbarui!');
         }
 
         let editSkillIndex = null;
         function openEditSkillModal(index) {
-            const data = getData();
-            const s = data.skills[index];
-            if (!s) return;
+            const data = getData(); const s = data.skills[index]; if (!s) return;
             editSkillIndex = index;
             document.getElementById('editSkillName').value = s.name || '';
             document.getElementById('editSkillIcon').value = s.icon || '⭐';
@@ -1571,33 +1108,21 @@
             document.getElementById('editSkillLevel').value = s.level || 'Mahir';
             document.getElementById('editSkillModal').classList.add('active');
         }
-        function closeEditSkillModal() {
-            document.getElementById('editSkillModal').classList.remove('active');
-            editSkillIndex = null;
-        }
+        function closeEditSkillModal() { document.getElementById('editSkillModal').classList.remove('active'); editSkillIndex = null; }
         function saveEditSkill() {
             if (editSkillIndex === null) return;
-            const data = getData();
-            const s = data.skills[editSkillIndex];
-            if (!s) return;
+            const data = getData(); const s = data.skills[editSkillIndex]; if (!s) return;
             const name = document.getElementById('editSkillName').value.trim();
             if (!name) { showToast('⚠️ Nama keahlian wajib diisi!', true); return; }
-            s.name = name;
-            s.icon = document.getElementById('editSkillIcon').value || '⭐';
+            s.name = name; s.icon = document.getElementById('editSkillIcon').value || '⭐';
             s.category = document.getElementById('editSkillCategory').value;
             s.level = document.getElementById('editSkillLevel').value;
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            closeEditSkillModal();
-            showToast('✅ Keahlian diperbarui!');
+            setData(data); renderAllAdmin(); renderPortfolio(); closeEditSkillModal(); showToast('✅ Keahlian diperbarui!');
         }
 
         let editEduIndex = null;
         function openEditEduModal(index) {
-            const data = getData();
-            const e = data.education[index];
-            if (!e) return;
+            const data = getData(); const e = data.education[index]; if (!e) return;
             editEduIndex = index;
             document.getElementById('editEduTitle').value = e.title || '';
             document.getElementById('editEduYearStart').value = e.yearStart || '';
@@ -1607,33 +1132,21 @@
             document.getElementById('editEduDesc').value = e.desc || '';
             document.getElementById('editEduModal').classList.add('active');
         }
-        function closeEditEduModal() {
-            document.getElementById('editEduModal').classList.remove('active');
-            editEduIndex = null;
-        }
+        function closeEditEduModal() { document.getElementById('editEduModal').classList.remove('active'); editEduIndex = null; }
         function saveEditEdu() {
             if (editEduIndex === null) return;
-            const data = getData();
-            const e = data.education[editEduIndex];
-            if (!e) return;
+            const data = getData(); const e = data.education[editEduIndex]; if (!e) return;
             const title = document.getElementById('editEduTitle').value.trim();
             if (!title) { showToast('⚠️ Nama sekolah wajib diisi!', true); return; }
-            e.title = title;
-            e.yearStart = document.getElementById('editEduYearStart').value;
+            e.title = title; e.yearStart = document.getElementById('editEduYearStart').value;
             e.yearEnd = document.getElementById('editEduYearEnd').value;
             e.status = document.getElementById('editEduStatus').value;
             e.image = document.getElementById('editEduImage').value.trim();
             e.desc = document.getElementById('editEduDesc').value.trim();
-            setData(data);
-            renderAllAdmin();
-            renderPortfolio();
-            closeEditEduModal();
-            showToast('✅ Pendidikan diperbarui!');
+            setData(data); renderAllAdmin(); renderPortfolio(); closeEditEduModal(); showToast('✅ Pendidikan diperbarui!');
         }
 
-        // ============================================================
-        // 13. SAVE PROFILE & RESET
-        // ============================================================
+        // ===== SAVE PROFILE & RESET =====
         function saveProfile() {
             try {
                 const data = getData();
@@ -1642,7 +1155,6 @@
                 data.profile.school = document.getElementById('profileSchool').value.trim();
                 data.profile.avatar = document.getElementById('profileAvatar').value.trim();
                 data.profile.bio = document.getElementById('profileBio').value.trim();
-
                 const social = [];
                 const ig = document.getElementById('sosmedInstagram').value.trim();
                 const tt = document.getElementById('sosmedTiktok').value.trim();
@@ -1651,32 +1163,13 @@
                 if (tt) social.push({ icon: 'fa-brands fa-tiktok', url: tt });
                 if (yt) social.push({ icon: 'fa-brands fa-youtube', url: yt });
                 data.profile.social = social;
-
-                setData(data);
-                renderAllAdmin();
-                renderPortfolio();
-                showToast('✅ Profil dan media sosial disimpan!');
-            } catch (err) {
-                alert('❌ Error: ' + err.message);
-            }
+                setData(data); renderAllAdmin(); renderPortfolio(); showToast('✅ Profil dan media sosial disimpan!');
+            } catch (err) { alert('❌ Error: ' + err.message); }
         }
+        function saveAll() { saveProfile(); showToast('✅ Semua data disimpan!'); }
+        function resetData() { if (!confirm('Reset semua data ke default?')) return; setData(JSON.parse(JSON.stringify(DEFAULT))); renderAllAdmin(); renderPortfolio(); showToast('↺ Data direset ke default'); }
 
-        function saveAll() {
-            saveProfile();
-            showToast('✅ Semua data disimpan!');
-        }
-
-        function resetData() {
-            if (!confirm('Reset semua data ke default?')) return;
-            setData(JSON.parse(JSON.stringify(DEFAULT)));
-            renderAllAdmin();
-            renderPortfolio();
-            showToast('↺ Data direset ke default');
-        }
-
-        // ============================================================
-        // 14. TAB NAVIGATION
-        // ============================================================
+        // ===== TAB NAVIGATION =====
         document.querySelectorAll('#adminPanelOverlay .tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('#adminPanelOverlay .tab-btn').forEach(b => b.classList.remove('active'));
@@ -1686,165 +1179,97 @@
             });
         });
 
-        // ============================================================
-        // 15. RENDER PORTOFOLIO (dengan perbaikan warna)
-        // ============================================================
+        // ===== RENDER PORTOFOLIO =====
         function renderPortfolio() {
             const data = getData();
             const p = data.profile;
-
             document.getElementById('heroName').textContent = p.name || 'Kelly Madeline Utomo';
             document.getElementById('heroTagline').textContent = p.slogan || 'Siswi SMP Mutiara Bangsa 2 | Kelas 9';
             document.getElementById('heroAvatar').src = p.avatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600';
             document.getElementById('heroAvatar').onerror = function() { this.src = 'https://placehold.co/400x400/0284c7/ffffff?text=Kelly+Madeline'; };
             document.getElementById('aboutBio').textContent = p.bio || 'Halo! Saya Kelly Madeline Utomo, murid kelas 9 di SMP Mutiara Bangsa 2 Tangerang. Memiliki hobi memasak, mencoba resep kuliner baru, dan mengeksplorasi ilmu teknologi digital.';
 
-            const socialHtml = (p.social || []).map(s =>
-                `<a href="${s.url}" target="_blank" style="margin:0 4px; font-size:20px; color:#0284c7;" class="hover:scale-110 transition"><i class="${s.icon}"></i></a>`
-            ).join('');
+            const socialHtml = (p.social || []).map(s => `<a href="${s.url}" target="_blank" style="margin:0 4px; font-size:20px; color:#0284c7;" class="hover:scale-110 transition"><i class="${s.icon}"></i></a>`).join('');
             document.getElementById('heroSocialIconsContainer').innerHTML = socialHtml;
             document.getElementById('footerSocialIconsContainer').innerHTML = socialHtml;
 
-            // Education - dengan class edu-card untuk styling dark mode
             const eduHtml = (data.education || []).map(e => {
                 const imgHtml = e.image ? `<img src="${e.image}" style="width:100%;height:100px;object-fit:cover;border-radius:10px;margin-bottom:6px;" onerror="this.style.display='none'" />` : '';
-                const statusBadge = `<span class="status-badge" style="background:#dbeafe;color:#1d4ed8;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;">${e.status || 'Lulus'}</span>`;
-                return `<div class="edu-card bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-md border border-sky-200 dark:border-slate-700">
-                            ${imgHtml}
-                            <h4 style="font-weight:700;">${e.title}</h4>
-                            <p style="color:#0284c7;font-size:13px;">${e.yearStart || ''} — ${e.yearEnd || ''} ${statusBadge}</p>
-                            <p style="color:#475569;font-size:13px;">${e.desc || ''}</p>
-                        </div>`;
+                const sb = `<span class="status-badge" style="background:#dbeafe;color:#1d4ed8;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;">${e.status || 'Lulus'}</span>`;
+                return `<div class="edu-card bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-md border border-sky-200 dark:border-slate-700">${imgHtml}<h4 style="font-weight:700;">${e.title}</h4><p style="color:#0284c7;font-size:13px;">${e.yearStart || ''} — ${e.yearEnd || ''} ${sb}</p><p style="color:#475569;font-size:13px;">${e.desc || ''}</p></div>`;
             }).join('');
             document.getElementById('educationGrid').innerHTML = eduHtml || '<p class="text-center text-slate-500">Belum ada data pendidikan.</p>';
 
-            // Skills - dengan class skill-item
-            const skillHtml = (data.skills || []).map(s =>
-                `<div class="skill-item bg-white dark:bg-slate-800 rounded-2xl p-4 text-center shadow-md border border-sky-200 dark:border-slate-700">
-                        <div style="font-size:32px;">${s.icon || '⭐'}</div>
-                        <p class="skill-name" style="font-weight:600;font-size:14px;">${s.name}</p>
-                        <p class="skill-meta" style="font-size:12px;">${s.category || 'Umum'} • ${s.level || 'Mahir'}</p>
-                    </div>`
-            ).join('');
+            const skillHtml = (data.skills || []).map(s => `<div class="skill-item bg-white dark:bg-slate-800 rounded-2xl p-4 text-center shadow-md border border-sky-200 dark:border-slate-700"><div style="font-size:32px;">${s.icon || '⭐'}</div><p class="skill-name" style="font-weight:600;font-size:14px;">${s.name}</p><p class="skill-meta" style="font-size:12px;">${s.category || 'Umum'} • ${s.level || 'Mahir'}</p></div>`).join('');
             document.getElementById('skillsGrid').innerHTML = skillHtml || '<p class="text-center text-slate-500">Belum ada data keahlian.</p>';
 
-            // Projects - dengan class project-card
             const projects = data.projects || [];
             const categories = [...new Set(projects.map(p => p.category))];
             let filterHtml = `<button class="px-3 py-1 rounded-full bg-sky-500 text-white text-xs font-bold" onclick="filterProjects('all')">Semua</button>`;
-            categories.forEach(cat => {
-                filterHtml += `<button class="px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-sky-400 hover:text-white transition" onclick="filterProjects('${cat}')">${cat}</button>`;
-            });
+            categories.forEach(cat => { filterHtml += `<button class="px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-sky-400 hover:text-white transition" onclick="filterProjects('${cat}')">${cat}</button>`; });
             document.getElementById('projectFilterContainer').innerHTML = filterHtml;
 
             function renderProjects(filter = 'all') {
                 const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
                 const projHtml = filtered.map(pr =>
                     `<div class="project-card bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-md border border-sky-200 dark:border-slate-700 hover:shadow-lg transition cursor-pointer" onclick="openDetailModal('project', ${pr.id})">
-                            <img src="${pr.image}" onerror="this.src='https://placehold.co/300x200/e2e8f0/64748b?text=No+Image'" class="w-full h-40 object-cover">
-                            <div class="p-4">
-                                <h4 class="font-bold">${pr.title}</h4>
-                                <div class="flex flex-wrap items-center gap-1 mt-1">
-                                    <span class="bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-[10px] font-bold px-2 py-0.5 rounded-full">${pr.category}</span>
-                                    ${pr.status ? `<span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full">${pr.status}</span>` : ''}
-                                </div>
-                                <p class="text-xs mt-1">${pr.desc ? pr.desc.substring(0,60)+(pr.desc.length>60?'…':'') : ''}</p>
-                                <p class="text-[10px] mt-1">${pr.date || ''}</p>
-                            </div>
-                        </div>`
+                        <img src="${pr.image}" onerror="this.src='https://placehold.co/300x200/e2e8f0/64748b?text=No+Image'" class="w-full h-40 object-cover">
+                        <div class="p-4"><h4 class="font-bold">${pr.title}</h4><div class="flex flex-wrap items-center gap-1 mt-1"><span class="bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 text-[10px] font-bold px-2 py-0.5 rounded-full">${pr.category}</span>${pr.status ? `<span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full">${pr.status}</span>` : ''}</div><p class="text-xs mt-1">${pr.desc ? pr.desc.substring(0,60)+(pr.desc.length>60?'…':'') : ''}</p><p class="text-[10px] mt-1">${pr.date || ''}</p></div>
+                    </div>`
                 ).join('');
                 document.getElementById('projectsGrid').innerHTML = projHtml || '<p class="text-center text-slate-500">Belum ada proyek.</p>';
             }
             window.filterProjects = renderProjects;
             renderProjects('all');
 
-            // Activities - dengan class activity-card
             const actHtml = (data.activities || []).map(a =>
                 `<div class="activity-card bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-md border border-sky-200 dark:border-slate-700 hover:shadow-lg transition cursor-pointer" onclick="openDetailModal('activity', ${a.id})">
-                        <img src="${a.image}" onerror="this.src='https://placehold.co/300x200/e2e8f0/64748b?text=No+Image'" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold">${a.icon || '📌'} ${a.title}</h4>
-                            <p class="text-sky-600 dark:text-sky-400 text-xs">${a.date || ''}</p>
-                            <p class="text-xs mt-1">${a.desc ? a.desc.substring(0,60)+(a.desc.length>60?'…':'') : ''}</p>
-                        </div>
-                    </div>`
+                    <img src="${a.image}" onerror="this.src='https://placehold.co/300x200/e2e8f0/64748b?text=No+Image'" class="w-full h-40 object-cover">
+                    <div class="p-4"><h4 class="font-bold">${a.icon || '📌'} ${a.title}</h4><p class="text-sky-600 dark:text-sky-400 text-xs">${a.date || ''}</p><p class="text-xs mt-1">${a.desc ? a.desc.substring(0,60)+(a.desc.length>60?'…':'') : ''}</p></div>
+                </div>`
             ).join('');
             document.getElementById('activitiesGrid').innerHTML = actHtml || '<p class="text-center text-slate-500">Belum ada kegiatan.</p>';
 
             window._portfolioData = data;
         }
 
-        // ============================================================
-        // 16. DETAIL MODAL
-        // ============================================================
         function openDetailModal(type, id) {
             const data = window._portfolioData || getData();
             let item = null;
-            if (type === 'project') {
-                item = data.projects.find(p => p.id === id);
-            } else if (type === 'activity') {
-                item = data.activities.find(a => a.id === id);
-            }
+            if (type === 'project') item = data.projects.find(p => p.id === id);
+            else if (type === 'activity') item = data.activities.find(a => a.id === id);
             if (!item) return;
-
             document.getElementById('modalImage').src = item.image || 'https://placehold.co/600x400/e2e8f0/64748b?text=No+Image';
             document.getElementById('modalImage').onerror = function() { this.src = 'https://placehold.co/600x400/e2e8f0/64748b?text=No+Image'; };
             document.getElementById('modalCategoryBadge').textContent = item.category || item.icon || 'Detail';
             document.getElementById('modalTitle').textContent = item.title || 'Tanpa Judul';
             document.getElementById('modalSubtitle').textContent = item.date || '';
             document.getElementById('modalDescription').textContent = item.desc || 'Tidak ada deskripsi.';
-
-            const linkContainer = document.getElementById('modalProjectLinkContainer');
-            if (item.link && item.link !== '#') {
-                linkContainer.innerHTML = `<a href="${item.link}" target="_blank" class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">🔗 Lihat Detail</a>`;
-            } else {
-                linkContainer.innerHTML = '';
-            }
-
+            const lc = document.getElementById('modalProjectLinkContainer');
+            if (item.link && item.link !== '#') lc.innerHTML = `<a href="${item.link}" target="_blank" class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">🔗 Lihat Detail</a>`;
+            else lc.innerHTML = '';
             document.getElementById('detailModal').classList.remove('hidden');
         }
+        function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
 
-        function closeDetailModal() {
-            document.getElementById('detailModal').classList.add('hidden');
-        }
-
-        // ============================================================
-        // 17. CONTACT FORM
-        // ============================================================
         function handleSendContactMessage(e) {
             e.preventDefault();
             const name = document.getElementById('contactSenderName').value.trim();
             const email = document.getElementById('contactSenderEmail').value.trim();
             const subject = document.getElementById('contactSenderSubject').value.trim();
             const msg = document.getElementById('contactSenderMsg').value.trim();
-
-            if (!name || !email || !subject || !msg) {
-                showToast('⚠️ Semua field wajib diisi!', true);
-                return;
-            }
-
+            if (!name || !email || !subject || !msg) { showToast('⚠️ Semua field wajib diisi!', true); return; }
             const data = getData();
             if (!data.messages) data.messages = [];
-            data.messages.push({
-                id: nextId(data.messages),
-                name: name,
-                email: email,
-                subject: subject,
-                message: msg,
-                timestamp: new Date().toLocaleString('id-ID'),
-                read: false
-            });
+            data.messages.push({ id: nextId(data.messages), name, email, subject, message: msg, timestamp: new Date().toLocaleString('id-ID'), read: false });
             setData(data);
-
             document.getElementById('contactSuccessText').textContent = `Pesan dari ${name} berhasil dikirim!`;
             document.getElementById('contactSuccessAlert').classList.remove('hidden');
             e.target.reset();
             showToast('✅ Pesan terkirim!');
         }
 
-        // ============================================================
-        // 18. INIT
-        // ============================================================
+        // ===== INIT =====
         const yearOptions = generateYearOptions();
         document.getElementById('eduYearStart').innerHTML = yearOptions;
         document.getElementById('eduYearEnd').innerHTML = yearOptions;
@@ -1857,12 +1282,10 @@
         document.getElementById('editProjectYear').innerHTML = `<option value="">Tahun</option>${yearRange}`;
         document.getElementById('editActivityYear').innerHTML = `<option value="">Tahun</option>${yearRange}`;
 
-        if (sessionStorage.getItem('adminLogged') === 'true') {
-            isAdminLoggedIn = true;
-        }
+        if (sessionStorage.getItem('adminLogged') === 'true') isAdminLoggedIn = true;
 
         renderPortfolio();
-        console.log('✅ Portofolio + Admin Panel + Dark Mode Fix siap!');
+        console.log('✅ Portofolio + Admin + Awan + Hamburger + Cursor siap!');
     </script>
 </body>
 </html>
