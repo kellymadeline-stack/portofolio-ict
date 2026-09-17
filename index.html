@@ -889,13 +889,13 @@
         // Listener Realtime Firestore
         try {
             onSnapshot(portfolioDocRef, (docSnap) => {
-                if (docSnap.exists()) {
+                if (docSnap.exists() && docSnap.data() && docSnap.data().profile) {
                     console.log('📥 Data diterima dari Firestore');
                     portfolioData = docSnap.data();
                     renderPortfolio();
                     if (isAdminLoggedIn) renderAllAdmin();
                 } else {
-                    console.log('ℹ️ Dokumen Firestore belum ada. Melakukan inisialisasi default ke Firestore...');
+                    console.log('ℹ️ Dokumen Firestore belum ada atau belum lengkap. Melakukan inisialisasi default ke Firestore...');
                     setDoc(portfolioDocRef, JSON.parse(JSON.stringify(DEFAULT))).catch(err => {
                         console.warn('Inisialisasi Firestore ditunda:', err.message);
                     });
