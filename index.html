@@ -23,6 +23,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     
+    <script type="importmap">
+    {
+        "imports": {
+            "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+        }
+    }
+    </script>
+    
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
@@ -660,7 +669,34 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        import { 
+            getFirestore, 
+            doc, 
+            getDoc, 
+            setDoc, 
+            onSnapshot 
+        } from "firebase/firestore";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBP5jOpWq-AJHgwG30Xb8YSEI7WtPhEMTw",
+          authDomain: "portopolio-97f09.firebaseapp.com",
+          projectId: "portopolio-97f09",
+          storageBucket: "portopolio-97f09.firebasestorage.app",
+          messagingSenderId: "507510267316",
+          appId: "1:507510267316:web:dedb0359a90e72765ee6e1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const portfolioDocRef = doc(db, "portfolio", "data");
+
         // ===== AWAN BERGERAK =====
         (function() {
             const canvas = document.getElementById('interactiveSkyCanvas');
@@ -828,15 +864,48 @@
             messages: []
         };
 
-        // ===== STORAGE =====
+        // ===== STORAGE (FIREBASE FIRESTORE) =====
+        let portfolioData = JSON.parse(JSON.stringify(DEFAULT));
+
         function getData() {
-            const raw = localStorage.getItem('portfolioData');
-            if (raw) { try { return JSON.parse(raw); } catch (e) {} }
-            localStorage.setItem('portfolioData', JSON.stringify(DEFAULT));
-            return JSON.parse(JSON.stringify(DEFAULT));
+            return JSON.parse(JSON.stringify(portfolioData || DEFAULT));
         }
-        function setData(data) { localStorage.setItem('portfolioData', JSON.stringify(data)); }
+
+        async function setData(data) {
+            portfolioData = JSON.parse(JSON.stringify(data));
+
+            // Simpan ke Firebase Firestore
+            try {
+                await setDoc(portfolioDocRef, portfolioData);
+                console.log('✅ Data berhasil disinkronisasi ke Firestore');
+            } catch (err) {
+                console.error('❌ Gagal menyimpan ke Firestore:', err);
+                showToast('⚠️ Gagal simpan ke Cloud: ' + (err.message || 'Periksa aturan Firestore'), true);
+            }
+        }
+
         function nextId(arr) { if (!arr || arr.length === 0) return 1; return Math.max(...arr.map(x => x.id || 0)) + 1; }
+
+        // Listener Realtime Firestore
+        try {
+            onSnapshot(portfolioDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    console.log('📥 Data diterima dari Firestore');
+                    portfolioData = docSnap.data();
+                    renderPortfolio();
+                    if (isAdminLoggedIn) renderAllAdmin();
+                } else {
+                    console.log('ℹ️ Dokumen Firestore belum ada. Melakukan inisialisasi default ke Firestore...');
+                    setDoc(portfolioDocRef, JSON.parse(JSON.stringify(DEFAULT))).catch(err => {
+                        console.warn('Inisialisasi Firestore ditunda:', err.message);
+                    });
+                }
+            }, (error) => {
+                console.warn('⚠️ Firestore snapshot listener warning:', error.message);
+            });
+        } catch (err) {
+            console.error('Error saat menghubungkan ke Firestore:', err);
+        }
 
         function showToast(msg, isError = false) {
             const el = document.getElementById('toast');
@@ -1284,8 +1353,56 @@
 
         if (sessionStorage.getItem('adminLogged') === 'true') isAdminLoggedIn = true;
 
+        // Expose functions to global window for inline HTML onclick/onsubmit attributes
+        Object.assign(window, {
+            toggleMobileMenu,
+            closeMobileMenu,
+            generateYearOptions,
+            generateYearRange,
+            getData,
+            setData,
+            nextId,
+            showToast,
+            toggleDarkMode,
+            openAdminModal,
+            closeAdminPanel,
+            logoutAdmin,
+            renderAllAdmin,
+            renderMessages,
+            markMessageRead,
+            deleteMessage,
+            clearAllMessages,
+            addProject,
+            addActivity,
+            addSkill,
+            addEducation,
+            deleteProject,
+            deleteActivity,
+            deleteSkill,
+            deleteEdu,
+            openEditProjectModal,
+            closeEditProjectModal,
+            saveEditProject,
+            openEditActivityModal,
+            closeEditActivityModal,
+            saveEditActivity,
+            openEditSkillModal,
+            closeEditSkillModal,
+            saveEditSkill,
+            openEditEduModal,
+            closeEditEduModal,
+            saveEditEdu,
+            saveProfile,
+            saveAll,
+            resetData,
+            renderPortfolio,
+            openDetailModal,
+            closeDetailModal,
+            handleSendContactMessage
+        });
+
         renderPortfolio();
-        console.log('✅ Portofolio + Admin + Awan + Hamburger + Cursor siap!');
+        console.log('✅ Portofolio + Admin + Awan + Hamburger + Cursor + Firebase Firestore siap!');
     </script>
 </body>
 </html>
